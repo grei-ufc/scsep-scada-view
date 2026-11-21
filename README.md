@@ -22,23 +22,49 @@ Sala 3D (site) ──► Servidor do laboratório ◄── HTTPS (só saída) �
 
 Manual de registradores: [`docs/registradores-no-scada-lts.pdf`](docs/registradores-no-scada-lts.pdf) (documento anterior, ainda usa o nome antigo "Ponte").
 
-## Início rápido
+## Como baixar
 
-Pré-requisitos: **WSL** e **Docker** já instalados (`docker compose version` funcionando) e uma conta no site do laboratório. Comandos no terminal do WSL.
+O pacote está neste repositório do GitHub: https://github.com/grei-ufc/scsep-scada-view
+
+**Opção A: pelo terminal (recomendada)**
 
 ```bash
-# 1. Baixar o pacote
 cd ~
 git clone https://github.com/grei-ufc/scsep-scada-view.git
 cd scsep-scada-view
+```
 
-# 2. Pegar o token: site do laboratório > Meu laboratório > Token de ativação > Copiar token
+- Se o comando `git` não existir: `sudo apt update && sudo apt install -y git`.
+- Se o Git pedir usuário e senha, o repositório está privado: peça acesso ao professor.
 
-# 3. Instalar e subir: instala o Docker se faltar e pergunta o token
+**Opção B: pelo navegador (ZIP)**
+
+1. Nesta página do GitHub, clique em **Code › Download ZIP** e extraia o arquivo.
+2. Copie a pasta para dentro do Ubuntu (WSL). No Ubuntu, troque `SEU_USUARIO` pelo seu usuário do Windows:
+
+   ```bash
+   cp -r /mnt/c/Users/SEU_USUARIO/Downloads/scsep-scada-view-main ~/scsep-scada-view
+   cd ~/scsep-scada-view
+   ```
+
+3. Se aparecer "Permission denied" ao rodar um `.sh`, use `bash instalar.sh`.
+
+**Para ler os PDFs:** abra a pasta `docs/` no GitHub, ou, no Ubuntu, rode `explorer.exe docs` (abre a pasta no Windows).
+
+## Início rápido
+
+Pré-requisitos: Windows 10 ou 11 com **WSL e Ubuntu** instalados (passos 1 e 2 do PDF 03) e uma conta no site do laboratório. **O Docker não precisa estar instalado:** o `instalar.sh` instala.
+
+```bash
+# 1. Baixe o pacote e entre na pasta (veja "Como baixar")
+
+# 2. Pegue o token: site do laboratório > Meu laboratório > Token de ativação > Copiar token
+
+# 3. Instale e suba (instala o Docker se faltar e pergunta o token)
 ./instalar.sh        # nas próximas vezes: ./iniciar.sh
 ```
 
-Depois de 1 a 3 minutos, abra **http://localhost:8080/Scada-LTS/** (`admin` / `admin`; troque a senha) e importe `scada-lts/scada-lts-import.json` em **Import/Export**.
+Depois de 1 a 3 minutos, abra **http://localhost:8080/Scada-LTS/** (`admin` / `admin`; troque a senha) e importe `scada-lts/scada-lts-import.json` em **Import/Export**. A importação cria os Data Sources, os pontos, os controles liga/desliga e a tela gráfica **Painel de comando** (menu **Graphic views**), onde você **clica** nos botões e LEDs para comandar a simulação.
 
 ## Onde fica o token
 
@@ -70,8 +96,8 @@ instalar.sh              # instala o Docker (se faltar) e chama o iniciar.sh
 iniciar.sh               # pergunta o token, grava o .env e sobe tudo
 docker-compose.yml       # rede, mysql, vpn-local, scadalts
 .env.example             # modelo de configuração (copie para .env)
-vpn-local/                   # Dockerfile e vpn-local-service.cjs (a vpn-local como serviço, gerado)
-scada-lts/               # scada-lts-import.json: 4 Data Sources, 25 pontos, 14 point links e a tela gráfica "Painel de comando"
+vpn-local/               # Dockerfile e vpn-local-service.cjs (a vpn-local como serviço, gerado)
+scada-lts/               # scada-lts-import.json: 4 Data Sources, 25 pontos, 14 point links e a tela gráfica "Painel de comando" (botões e LEDs clicáveis)
 docs/                    # tutoriais em PDF
 ```
 
