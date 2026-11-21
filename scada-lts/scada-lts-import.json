@@ -80,6 +80,14 @@
       "host": "127.0.0.14",
       "port": 5020,
       "encapsulated": false
+    },
+    {
+      "xid": "DS_CONTROLES",
+      "name": "Controles (liga/desliga)",
+      "enabled": true,
+      "type": "VIRTUAL",
+      "updatePeriodType": "MINUTES",
+      "updatePeriods": 5
     }
   ],
   "dataPoints": [
@@ -460,6 +468,281 @@
         "settable": false
       },
       "eventDetectors": []
+    },
+    {
+      "xid": "DP_CTRL_LED1",
+      "name": "Controle: LED 1 (verde): ligar/desligar",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "dataSourceXid": "DS_CONTROLES",
+      "pointLocator": {
+        "dataType": "BINARY",
+        "changeType": {
+          "type": "NO_CHANGE",
+          "startValue": "false"
+        },
+        "settable": true
+      },
+      "textRenderer": {
+        "type": "BINARY",
+        "zeroLabel": "Desligado",
+        "zeroColour": "#888888",
+        "oneLabel": "Ligado",
+        "oneColour": "#2e9e44"
+      },
+      "eventDetectors": []
+    },
+    {
+      "xid": "DP_CTRL_LED2",
+      "name": "Controle: LED 2 (amarelo): ligar/desligar",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "dataSourceXid": "DS_CONTROLES",
+      "pointLocator": {
+        "dataType": "BINARY",
+        "changeType": {
+          "type": "NO_CHANGE",
+          "startValue": "false"
+        },
+        "settable": true
+      },
+      "textRenderer": {
+        "type": "BINARY",
+        "zeroLabel": "Desligado",
+        "zeroColour": "#888888",
+        "oneLabel": "Ligado",
+        "oneColour": "#2e9e44"
+      },
+      "eventDetectors": []
+    },
+    {
+      "xid": "DP_CTRL_LED3",
+      "name": "Controle: LED 3 (vermelho): ligar/desligar",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "dataSourceXid": "DS_CONTROLES",
+      "pointLocator": {
+        "dataType": "BINARY",
+        "changeType": {
+          "type": "NO_CHANGE",
+          "startValue": "false"
+        },
+        "settable": true
+      },
+      "textRenderer": {
+        "type": "BINARY",
+        "zeroLabel": "Desligado",
+        "zeroColour": "#888888",
+        "oneLabel": "Ligado",
+        "oneColour": "#2e9e44"
+      },
+      "eventDetectors": []
+    },
+    {
+      "xid": "DP_CTRL_LED4",
+      "name": "Controle: LED 4 (azul): ligar/desligar",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "dataSourceXid": "DS_CONTROLES",
+      "pointLocator": {
+        "dataType": "BINARY",
+        "changeType": {
+          "type": "NO_CHANGE",
+          "startValue": "false"
+        },
+        "settable": true
+      },
+      "textRenderer": {
+        "type": "BINARY",
+        "zeroLabel": "Desligado",
+        "zeroColour": "#888888",
+        "oneLabel": "Ligado",
+        "oneColour": "#2e9e44"
+      },
+      "eventDetectors": []
+    },
+    {
+      "xid": "DP_CTRL_DISJUNTOR",
+      "name": "Controle: Disjuntor DJ-01: fechar/abrir",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "dataSourceXid": "DS_CONTROLES",
+      "pointLocator": {
+        "dataType": "BINARY",
+        "changeType": {
+          "type": "NO_CHANGE",
+          "startValue": "false"
+        },
+        "settable": true
+      },
+      "textRenderer": {
+        "type": "BINARY",
+        "zeroLabel": "Aberto",
+        "zeroColour": "#d6453d",
+        "oneLabel": "Fechado",
+        "oneColour": "#2e9e44"
+      },
+      "eventDetectors": []
+    },
+    {
+      "xid": "DP_CTRL_SECCIONADORA",
+      "name": "Controle: Seccionadora SC-01: fechar/abrir",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "dataSourceXid": "DS_CONTROLES",
+      "pointLocator": {
+        "dataType": "BINARY",
+        "changeType": {
+          "type": "NO_CHANGE",
+          "startValue": "true"
+        },
+        "settable": true
+      },
+      "textRenderer": {
+        "type": "BINARY",
+        "zeroLabel": "Aberto",
+        "zeroColour": "#d6453d",
+        "oneLabel": "Fechado",
+        "oneColour": "#2e9e44"
+      },
+      "eventDetectors": []
+    },
+    {
+      "xid": "DP_CTRL_INVERSOR",
+      "name": "Controle: Inversor INV-01: ligar/parar",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "dataSourceXid": "DS_CONTROLES",
+      "pointLocator": {
+        "dataType": "BINARY",
+        "changeType": {
+          "type": "NO_CHANGE",
+          "startValue": "false"
+        },
+        "settable": true
+      },
+      "textRenderer": {
+        "type": "BINARY",
+        "zeroLabel": "Desligado",
+        "zeroColour": "#888888",
+        "oneLabel": "Ligado",
+        "oneColour": "#2e9e44"
+      },
+      "eventDetectors": []
+    }
+  ],
+  "pointLinks": [
+    {
+      "xid": "PL_CTRL_LED1",
+      "sourcePointId": "DP_CTRL_LED1",
+      "targetPointId": "DP_CLP_DO_PAINEL_E_MOTOR_106",
+      "script": "return source.value ? 1 : 11;",
+      "event": "CHANGE",
+      "disabled": false
+    },
+    {
+      "xid": "PL_ESTADO_LED1",
+      "sourcePointId": "DP_CLP_DO_PAINEL_E_MOTOR_15",
+      "targetPointId": "DP_CTRL_LED1",
+      "script": "return source.value == 1;",
+      "event": "CHANGE",
+      "disabled": false
+    },
+    {
+      "xid": "PL_CTRL_LED2",
+      "sourcePointId": "DP_CTRL_LED2",
+      "targetPointId": "DP_CLP_DO_PAINEL_E_MOTOR_106",
+      "script": "return source.value ? 2 : 12;",
+      "event": "CHANGE",
+      "disabled": false
+    },
+    {
+      "xid": "PL_ESTADO_LED2",
+      "sourcePointId": "DP_CLP_DO_PAINEL_E_MOTOR_16",
+      "targetPointId": "DP_CTRL_LED2",
+      "script": "return source.value == 1;",
+      "event": "CHANGE",
+      "disabled": false
+    },
+    {
+      "xid": "PL_CTRL_LED3",
+      "sourcePointId": "DP_CTRL_LED3",
+      "targetPointId": "DP_CLP_DO_PAINEL_E_MOTOR_106",
+      "script": "return source.value ? 3 : 13;",
+      "event": "CHANGE",
+      "disabled": false
+    },
+    {
+      "xid": "PL_ESTADO_LED3",
+      "sourcePointId": "DP_CLP_DO_PAINEL_E_MOTOR_17",
+      "targetPointId": "DP_CTRL_LED3",
+      "script": "return source.value == 1;",
+      "event": "CHANGE",
+      "disabled": false
+    },
+    {
+      "xid": "PL_CTRL_LED4",
+      "sourcePointId": "DP_CTRL_LED4",
+      "targetPointId": "DP_CLP_DO_PAINEL_E_MOTOR_106",
+      "script": "return source.value ? 4 : 14;",
+      "event": "CHANGE",
+      "disabled": false
+    },
+    {
+      "xid": "PL_ESTADO_LED4",
+      "sourcePointId": "DP_CLP_DO_PAINEL_E_MOTOR_18",
+      "targetPointId": "DP_CTRL_LED4",
+      "script": "return source.value == 1;",
+      "event": "CHANGE",
+      "disabled": false
+    },
+    {
+      "xid": "PL_CTRL_DISJUNTOR",
+      "sourcePointId": "DP_CTRL_DISJUNTOR",
+      "targetPointId": "DP_IED_DE_PROTECAO_100",
+      "script": "return source.value ? 1 : 2;",
+      "event": "CHANGE",
+      "disabled": false
+    },
+    {
+      "xid": "PL_ESTADO_DISJUNTOR",
+      "sourcePointId": "DP_IED_DE_PROTECAO_0",
+      "targetPointId": "DP_CTRL_DISJUNTOR",
+      "script": "return source.value == 1;",
+      "event": "CHANGE",
+      "disabled": false
+    },
+    {
+      "xid": "PL_CTRL_SECCIONADORA",
+      "sourcePointId": "DP_CTRL_SECCIONADORA",
+      "targetPointId": "DP_CLP_DE_GERACAO_104",
+      "script": "return source.value ? 1 : 2;",
+      "event": "CHANGE",
+      "disabled": false
+    },
+    {
+      "xid": "PL_ESTADO_SECCIONADORA",
+      "sourcePointId": "DP_CLP_DE_GERACAO_9",
+      "targetPointId": "DP_CTRL_SECCIONADORA",
+      "script": "return source.value == 1;",
+      "event": "CHANGE",
+      "disabled": false
+    },
+    {
+      "xid": "PL_CTRL_INVERSOR",
+      "sourcePointId": "DP_CTRL_INVERSOR",
+      "targetPointId": "DP_CLP_DE_GERACAO_101",
+      "script": "return source.value ? 1 : 2;",
+      "event": "CHANGE",
+      "disabled": false
+    },
+    {
+      "xid": "PL_ESTADO_INVERSOR",
+      "sourcePointId": "DP_CLP_DE_GERACAO_1",
+      "targetPointId": "DP_CTRL_INVERSOR",
+      "script": "return source.value == 1;",
+      "event": "CHANGE",
+      "disabled": false
     }
   ]
 }
