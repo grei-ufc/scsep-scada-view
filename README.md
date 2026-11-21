@@ -71,7 +71,7 @@ iniciar.sh               # pergunta o token, grava o .env e sobe tudo
 docker-compose.yml       # rede, mysql, vpn-local, scadalts
 .env.example             # modelo de configuração (copie para .env)
 vpn-local/                   # Dockerfile e vpn-local-service.cjs (a vpn-local como serviço, gerado)
-scada-lts/               # scada-lts-import.json: 4 Data Sources, 25 pontos e 14 point links (3 disjuntores e LEDs com controles liga/desliga)
+scada-lts/               # scada-lts-import.json: 4 Data Sources, 25 pontos, 14 point links e a tela gráfica "Painel de comando"
 docs/                    # tutoriais em PDF
 ```
 

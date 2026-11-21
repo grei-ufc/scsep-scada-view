@@ -131,7 +131,12 @@
         "slaveMonitor": false,
         "settable": false
       },
-      "eventDetectors": []
+      "eventDetectors": [],
+      "textRenderer": {
+        "type": "ANALOG",
+        "format": "0.0",
+        "suffix": " A"
+      }
     },
     {
       "xid": "DP_IED_DE_PROTECAO_100",
@@ -215,7 +220,12 @@
         "slaveMonitor": false,
         "settable": false
       },
-      "eventDetectors": []
+      "eventDetectors": [],
+      "textRenderer": {
+        "type": "ANALOG",
+        "format": "0.00",
+        "suffix": " kW"
+      }
     },
     {
       "xid": "DP_CLP_DE_GERACAO_3",
@@ -236,7 +246,12 @@
         "slaveMonitor": false,
         "settable": false
       },
-      "eventDetectors": []
+      "eventDetectors": [],
+      "textRenderer": {
+        "type": "ANALOG",
+        "format": "0.0",
+        "suffix": " V"
+      }
     },
     {
       "xid": "DP_CLP_DE_GERACAO_9",
@@ -743,6 +758,253 @@
       "script": "return source.value == 1;",
       "event": "CHANGE",
       "disabled": false
+    }
+  ],
+  "graphicalViews": [
+    {
+      "xid": "GV_PAINEL",
+      "name": "Painel de comando",
+      "anonymousAccess": "NONE",
+      "user": "admin",
+      "resolution": "R800x600",
+      "viewComponents": [
+        {
+          "type": "HTML",
+          "index": 0,
+          "x": 20,
+          "y": 10,
+          "content": "<div style=\"font:700 20px sans-serif;color:#1c2430\">Painel de comando (igual ao da sala 3D)</div><div style=\"font:13px sans-serif;color:#5b6878\">Clique no botão ou no LED para mudar; o estado acompanha a simulação.</div>"
+        },
+        {
+          "type": "HTML",
+          "index": 1,
+          "x": 20,
+          "y": 62,
+          "content": "<div style=\"font:700 15px sans-serif;color:#1c2430\">Chaves (disjuntores)</div>"
+        },
+        {
+          "type": "HTML",
+          "index": 2,
+          "x": 40,
+          "y": 92,
+          "content": "<div style=\"font:700 14px sans-serif;color:#1c2430\">Chave 1</div><div style=\"font:13px sans-serif;color:#5b6878\">Disjuntor geral</div>"
+        },
+        {
+          "type": "BINARY_GRAPHIC",
+          "index": 3,
+          "x": 40,
+          "y": 135,
+          "dataPointXid": "DP_CTRL_DJ_GERAL",
+          "imageSet": "Botao-3D",
+          "zeroImageIndex": 0,
+          "oneImageIndex": 1,
+          "displayText": false,
+          "displayControls": true
+        },
+        {
+          "type": "SIMPLE",
+          "index": 4,
+          "x": 115,
+          "y": 155,
+          "dataPointXid": "DP_CTRL_DJ_GERAL",
+          "displayPointName": false,
+          "styleAttribute": "font:700 16px sans-serif"
+        },
+        {
+          "type": "HTML",
+          "index": 5,
+          "x": 270,
+          "y": 92,
+          "content": "<div style=\"font:700 14px sans-serif;color:#1c2430\">Chave 2</div><div style=\"font:13px sans-serif;color:#5b6878\">Disjuntor do motor</div>"
+        },
+        {
+          "type": "BINARY_GRAPHIC",
+          "index": 6,
+          "x": 270,
+          "y": 135,
+          "dataPointXid": "DP_CTRL_DJ_MOTOR",
+          "imageSet": "Botao-3D",
+          "zeroImageIndex": 0,
+          "oneImageIndex": 1,
+          "displayText": false,
+          "displayControls": true
+        },
+        {
+          "type": "SIMPLE",
+          "index": 7,
+          "x": 345,
+          "y": 155,
+          "dataPointXid": "DP_CTRL_DJ_MOTOR",
+          "displayPointName": false,
+          "styleAttribute": "font:700 16px sans-serif"
+        },
+        {
+          "type": "HTML",
+          "index": 8,
+          "x": 500,
+          "y": 92,
+          "content": "<div style=\"font:700 14px sans-serif;color:#1c2430\">Chave 3</div><div style=\"font:13px sans-serif;color:#5b6878\">Disjuntor do inversor</div>"
+        },
+        {
+          "type": "BINARY_GRAPHIC",
+          "index": 9,
+          "x": 500,
+          "y": 135,
+          "dataPointXid": "DP_CTRL_DJ_INVERSOR",
+          "imageSet": "Botao-3D",
+          "zeroImageIndex": 0,
+          "oneImageIndex": 1,
+          "displayText": false,
+          "displayControls": true
+        },
+        {
+          "type": "SIMPLE",
+          "index": 10,
+          "x": 575,
+          "y": 155,
+          "dataPointXid": "DP_CTRL_DJ_INVERSOR",
+          "displayPointName": false,
+          "styleAttribute": "font:700 16px sans-serif"
+        },
+        {
+          "type": "HTML",
+          "index": 11,
+          "x": 20,
+          "y": 225,
+          "content": "<div style=\"font:700 15px sans-serif;color:#1c2430\">LEDs</div>"
+        },
+        {
+          "type": "HTML",
+          "index": 12,
+          "x": 40,
+          "y": 255,
+          "content": "<div style=\"font:700 14px sans-serif;color:#1c2430\">LED 1</div><div style=\"font:13px sans-serif;color:#5b6878\">verde</div>"
+        },
+        {
+          "type": "BINARY_GRAPHIC",
+          "index": 13,
+          "x": 120,
+          "y": 255,
+          "dataPointXid": "DP_CTRL_LED1",
+          "imageSet": "Leds32",
+          "zeroImageIndex": 3,
+          "oneImageIndex": 4,
+          "displayText": false,
+          "displayControls": true
+        },
+        {
+          "type": "HTML",
+          "index": 14,
+          "x": 210,
+          "y": 255,
+          "content": "<div style=\"font:700 14px sans-serif;color:#1c2430\">LED 2</div><div style=\"font:13px sans-serif;color:#5b6878\">amarelo</div>"
+        },
+        {
+          "type": "BINARY_GRAPHIC",
+          "index": 15,
+          "x": 290,
+          "y": 255,
+          "dataPointXid": "DP_CTRL_LED2",
+          "imageSet": "Leds32",
+          "zeroImageIndex": 12,
+          "oneImageIndex": 13,
+          "displayText": false,
+          "displayControls": true
+        },
+        {
+          "type": "HTML",
+          "index": 16,
+          "x": 380,
+          "y": 255,
+          "content": "<div style=\"font:700 14px sans-serif;color:#1c2430\">LED 3</div><div style=\"font:13px sans-serif;color:#5b6878\">vermelho</div>"
+        },
+        {
+          "type": "BINARY_GRAPHIC",
+          "index": 17,
+          "x": 460,
+          "y": 255,
+          "dataPointXid": "DP_CTRL_LED3",
+          "imageSet": "Leds32",
+          "zeroImageIndex": 6,
+          "oneImageIndex": 7,
+          "displayText": false,
+          "displayControls": true
+        },
+        {
+          "type": "HTML",
+          "index": 18,
+          "x": 550,
+          "y": 255,
+          "content": "<div style=\"font:700 14px sans-serif;color:#1c2430\">LED 4</div><div style=\"font:13px sans-serif;color:#5b6878\">azul</div>"
+        },
+        {
+          "type": "BINARY_GRAPHIC",
+          "index": 19,
+          "x": 630,
+          "y": 255,
+          "dataPointXid": "DP_CTRL_LED4",
+          "imageSet": "Leds32",
+          "zeroImageIndex": 0,
+          "oneImageIndex": 1,
+          "displayText": false,
+          "displayControls": true
+        },
+        {
+          "type": "HTML",
+          "index": 20,
+          "x": 20,
+          "y": 335,
+          "content": "<div style=\"font:700 15px sans-serif;color:#1c2430\">Medições</div>"
+        },
+        {
+          "type": "HTML",
+          "index": 21,
+          "x": 40,
+          "y": 365,
+          "content": "<div style=\"font:13px sans-serif;color:#5b6878\">Tensão</div>"
+        },
+        {
+          "type": "SIMPLE",
+          "index": 22,
+          "x": 40,
+          "y": 385,
+          "dataPointXid": "DP_CLP_DE_GERACAO_3",
+          "displayPointName": false,
+          "styleAttribute": "font:700 22px sans-serif;color:#1c2430"
+        },
+        {
+          "type": "HTML",
+          "index": 23,
+          "x": 270,
+          "y": 365,
+          "content": "<div style=\"font:13px sans-serif;color:#5b6878\">Corrente</div>"
+        },
+        {
+          "type": "SIMPLE",
+          "index": 24,
+          "x": 270,
+          "y": 385,
+          "dataPointXid": "DP_IED_DE_PROTECAO_5",
+          "displayPointName": false,
+          "styleAttribute": "font:700 22px sans-serif;color:#1c2430"
+        },
+        {
+          "type": "HTML",
+          "index": 25,
+          "x": 500,
+          "y": 365,
+          "content": "<div style=\"font:13px sans-serif;color:#5b6878\">Potência ativa</div>"
+        },
+        {
+          "type": "SIMPLE",
+          "index": 26,
+          "x": 500,
+          "y": 385,
+          "dataPointXid": "DP_CLP_DE_GERACAO_2",
+          "displayPointName": false,
+          "styleAttribute": "font:700 22px sans-serif;color:#1c2430"
+        }
+      ]
     }
   ]
 }
