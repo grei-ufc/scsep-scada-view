@@ -12,12 +12,23 @@ NOMES="${LAB_NOMES:-rede mysql vpn-local scadalts}"   # nomes de containers que 
 PORTA="${LAB_PORTA:-8080}"                              # porta do Scada-LTS do pacote
 
 APT_ATUALIZADO=0
+eh_kali() { [ "${LAB_KALI:-0}" = 1 ] || grep -qi '^ID=kali' /etc/os-release 2>/dev/null; }
+apt_atualizar() {
+  sudo apt-get update && return 0
+  if eh_kali; then
+    echo "O apt reclamou das chaves do Kali. Atualizando a chave do repositório..."
+    sudo curl -fsSL -o /usr/share/keyrings/kali-archive-keyring.gpg https://archive.kali.org/archive-keyring.gpg || true
+    sudo apt-get update && return 0
+  fi
+  return 1
+}
 apt_instalar() {
-  if [ "$APT_ATUALIZADO" = 0 ]; then sudo apt-get update; APT_ATUALIZADO=1; fi
+  if [ "$APT_ATUALIZADO" = 0 ]; then apt_atualizar; APT_ATUALIZADO=1; fi
   sudo apt-get install -y "$@"
 }
 
 echo "== Laboratório Virtual: instalação =="
+eh_kali && echo "(Kali Linux detectado: usando os pacotes do Debian/Kali)"
 echo "Se o Ubuntu pedir a sua senha, digite-a (ela não aparece na tela) e aperte Enter."
 
 # 0) Pacote: se este script não está dentro da pasta do pacote, baixa o pacote primeiro e continua de lá
@@ -37,24 +48,40 @@ if [ -z "$AQUI" ] || [ ! -f "$AQUI/docker-compose.yml" ]; then
 fi
 cd "$AQUI"
 
-# 1) Docker
-if ! command -v docker >/dev/null 2>&1; then
-  echo "Instalando o Docker (pode levar alguns minutos)..."
-  apt_instalar docker.io || true
-fi
-
-# 2) Docker Compose (o comando "docker compose")
-if ! sudo docker compose version >/dev/null 2>&1; then
-  echo "Instalando o Docker Compose..."
-  apt_instalar docker-compose-v2 || {
+# 1) Docker e Docker Compose, numa rodada só do apt. O nome do pacote do Compose muda conforme a distribuição:
+#    Ubuntu: docker-compose-v2 | Debian/Kali: docker-compose (v2) | outros: docker-compose-plugin
+tem_docker() { command -v docker >/dev/null 2>&1; }
+tem_candidato() { local c; c="$(apt-cache policy "$1" 2>/dev/null | awk '/Candidate:/ {print $2}')"; [ -n "$c" ] && [ "$c" != "(none)" ]; }
+tem_compose() { sudo docker compose version >/dev/null 2>&1 || command -v docker-compose >/dev/null 2>&1; }
+if ! tem_docker || ! tem_compose; then
+  echo "Instalando o Docker e o Docker Compose (pode levar alguns minutos)..."
+  if [ "$APT_ATUALIZADO" = 0 ]; then apt_atualizar || true; APT_ATUALIZADO=1; fi
+  pacotes=()
+  tem_docker || pacotes+=(docker.io)
+  if ! tem_compose; then
+    for p in docker-compose-v2 docker-compose-plugin docker-compose; do
+      if tem_candidato "$p"; then pacotes+=("$p"); break; fi
+    done
+  fi
+  [ "${#pacotes[@]}" -gt 0 ] && { apt_instalar "${pacotes[@]}" || true; }
+  # confere o resultado; se faltar algo, usa o instalador oficial do Docker
+  if ! tem_docker || ! tem_compose; then
+    if eh_kali; then
+      echo "ERRO: não consegui instalar o Docker pelo apt do Kali (veja as mensagens acima). Tente: sudo apt update && sudo apt install -y docker.io docker-compose"
+      exit 1
+    fi
     echo "Usando o instalador oficial do Docker..."
     command -v curl >/dev/null 2>&1 || apt_instalar curl
     curl -fsSL https://get.docker.com | sudo sh
-  }
+  fi
 fi
+
+# 2) (o Compose já foi instalado acima)
 
 # 3) python3 (usado para aplicar a configuração do Scada-LTS)
 command -v python3 >/dev/null 2>&1 || apt_instalar python3
+
+[ "${INSTALAR_SO_PACOTES:-0}" = 1 ] && { echo "(modo teste: pacotes instalados)"; exit 0; }
 
 # 4) Serviço do Docker ligado
 if ! sudo docker info >/dev/null 2>&1; then

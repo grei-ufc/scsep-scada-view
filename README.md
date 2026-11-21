@@ -83,6 +83,16 @@ No arquivo `.env`, na linha `CHAVE=`. Sem o script: `cp .env.example .env`, edit
 
 O token só é lido na primeira ativação; depois o vpn-local guarda a credencial no volume `scada-lab_vpn-local_data`. Para trocar de token: `docker compose down`, `docker volume rm scada-lab_vpn-local_data`, ajuste `CHAVE` e `docker compose up -d`.
 
+## Kali Linux (Debian)
+
+No **Kali Linux** (inclusive o Kali no WSL), use o instalador específico. Ele usa os pacotes do Debian/Kali (`docker.io` e `docker-compose`) e, se o `apt` reclamar das chaves do Kali, atualiza a chave sozinho:
+
+```bash
+sudo apt update && sudo apt install -y curl && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/instalar-kali.sh | bash
+```
+
+Se o primeiro `sudo apt update` já falhar por causa das chaves, rode antes: `sudo curl -fsSL -o /usr/share/keyrings/kali-archive-keyring.gpg https://archive.kali.org/archive-keyring.gpg`. O resto é igual ao Ubuntu (também para quem já tem um Scada-LTS).
+
 ## Já tenho Docker e um Scada-LTS
 
 **O mesmo comando de cima serve.** Se ele achar um Scada-LTS seu rodando (ou containers com os mesmos nomes do laboratório, como `mysql` e `scadalts`), ele mostra o que vai parar e **pergunta antes**. Nada é apagado: os containers são parados e, quando o nome é igual ao do laboratório, renomeados com `-anterior`. Para **voltar ao seu Scada-LTS**: `cd ~/scsep-scada-view && ./voltar-ao-scada-anterior.sh`.
@@ -124,6 +134,7 @@ Troque `PORTA` pela porta do seu Scada-LTS. Se a senha do admin não for `admin`
 ```
 trocar-scada.sh          # atalho antigo: chama o instalar.sh
 so-vpn-local.sh          # para quem já tem Docker e Scada-LTS: sobe só o vpn-local ligado ao seu Scada-LTS
+instalar-kali.sh         # o mesmo, para Kali Linux (Debian)
 instalar.sh              # instala o Docker (se faltar) e chama o iniciar.sh
 iniciar.sh               # pergunta o token, grava o .env e sobe tudo
 docker-compose.yml       # rede, mysql, vpn-local, scadalts
