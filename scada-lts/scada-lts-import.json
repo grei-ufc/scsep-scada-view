@@ -2,7 +2,7 @@
   "dataSources": [
     {
       "xid": "DS_IED_DE_PROTECAO",
-      "name": "IED de proteção",
+      "name": "IED de proteção (disjuntor geral e corrente)",
       "enabled": true,
       "type": "MODBUS_IP",
       "alarmLevels": {
@@ -29,7 +29,7 @@
     },
     {
       "xid": "DS_CLP_DE_GERACAO",
-      "name": "CLP de geração",
+      "name": "CLP de geração (disjuntores do motor e do inversor)",
       "enabled": true,
       "type": "MODBUS_IP",
       "alarmLevels": {
@@ -56,7 +56,7 @@
     },
     {
       "xid": "DS_CLP_DO_PAINEL_E_MOTOR",
-      "name": "CLP do painel e motor",
+      "name": "CLP do painel e motor (LEDs)",
       "enabled": true,
       "type": "MODBUS_IP",
       "alarmLevels": {
@@ -93,7 +93,7 @@
   "dataPoints": [
     {
       "xid": "DP_IED_DE_PROTECAO_0",
-      "name": "IED de proteção: Disjuntor fechado",
+      "name": "Chave 1 - Disjuntor geral - Estado (1=fechado)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_IED_DE_PROTECAO",
@@ -114,7 +114,7 @@
     },
     {
       "xid": "DP_IED_DE_PROTECAO_5",
-      "name": "IED de proteção: Corrente (A)",
+      "name": "Medição - Corrente (A)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_IED_DE_PROTECAO",
@@ -135,7 +135,7 @@
     },
     {
       "xid": "DP_IED_DE_PROTECAO_100",
-      "name": "IED de proteção: Comando do disjuntor",
+      "name": "Chave 1 - Disjuntor geral - Comando (1=fechar, 2=abrir)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_IED_DE_PROTECAO",
@@ -156,7 +156,7 @@
     },
     {
       "xid": "DP_IED_DE_PROTECAO_110",
-      "name": "IED de proteção: Resultado do disjuntor",
+      "name": "Chave 1 - Disjuntor geral - Resultado do último comando",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_IED_DE_PROTECAO",
@@ -177,7 +177,7 @@
     },
     {
       "xid": "DP_CLP_DE_GERACAO_1",
-      "name": "CLP de geração: Inversor ligado",
+      "name": "Chave 3 - Disjuntor do inversor - Estado (1=fechado)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DE_GERACAO",
@@ -198,7 +198,7 @@
     },
     {
       "xid": "DP_CLP_DE_GERACAO_2",
-      "name": "CLP de geração: Potência ativa (kW)",
+      "name": "Medição - Potência ativa (kW)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DE_GERACAO",
@@ -219,7 +219,7 @@
     },
     {
       "xid": "DP_CLP_DE_GERACAO_3",
-      "name": "CLP de geração: Tensão CA (V)",
+      "name": "Medição - Tensão CA (V)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DE_GERACAO",
@@ -240,7 +240,7 @@
     },
     {
       "xid": "DP_CLP_DE_GERACAO_9",
-      "name": "CLP de geração: Seccionadora fechada",
+      "name": "Chave 2 - Disjuntor do motor - Estado (1=fechado)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DE_GERACAO",
@@ -261,7 +261,7 @@
     },
     {
       "xid": "DP_CLP_DE_GERACAO_101",
-      "name": "CLP de geração: Comando do inversor",
+      "name": "Chave 3 - Disjuntor do inversor - Comando (1=fechar, 2=abrir)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DE_GERACAO",
@@ -282,7 +282,7 @@
     },
     {
       "xid": "DP_CLP_DE_GERACAO_104",
-      "name": "CLP de geração: Comando da seccionadora",
+      "name": "Chave 2 - Disjuntor do motor - Comando (1=fechar, 2=abrir)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DE_GERACAO",
@@ -303,7 +303,7 @@
     },
     {
       "xid": "DP_CLP_DE_GERACAO_111",
-      "name": "CLP de geração: Resultado do inversor",
+      "name": "Chave 3 - Disjuntor do inversor - Resultado do último comando",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DE_GERACAO",
@@ -324,7 +324,7 @@
     },
     {
       "xid": "DP_CLP_DE_GERACAO_113",
-      "name": "CLP de geração: Resultado da seccionadora",
+      "name": "Chave 2 - Disjuntor do motor - Resultado do último comando",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DE_GERACAO",
@@ -345,7 +345,7 @@
     },
     {
       "xid": "DP_CLP_DO_PAINEL_E_MOTOR_15",
-      "name": "CLP do painel e motor: LED 1 (verde) aceso",
+      "name": "LED 1 (verde) - Estado (1=aceso)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
@@ -366,7 +366,7 @@
     },
     {
       "xid": "DP_CLP_DO_PAINEL_E_MOTOR_16",
-      "name": "CLP do painel e motor: LED 2 (amarelo) aceso",
+      "name": "LED 2 (amarelo) - Estado (1=aceso)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
@@ -387,7 +387,7 @@
     },
     {
       "xid": "DP_CLP_DO_PAINEL_E_MOTOR_17",
-      "name": "CLP do painel e motor: LED 3 (vermelho) aceso",
+      "name": "LED 3 (vermelho) - Estado (1=aceso)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
@@ -408,7 +408,7 @@
     },
     {
       "xid": "DP_CLP_DO_PAINEL_E_MOTOR_18",
-      "name": "CLP do painel e motor: LED 4 (azul) aceso",
+      "name": "LED 4 (azul) - Estado (1=aceso)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
@@ -429,7 +429,7 @@
     },
     {
       "xid": "DP_CLP_DO_PAINEL_E_MOTOR_106",
-      "name": "CLP do painel e motor: Comando dos LEDs",
+      "name": "LEDs - Comando (1 a 4 acende, 11 a 14 apaga)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
@@ -450,7 +450,7 @@
     },
     {
       "xid": "DP_CLP_DO_PAINEL_E_MOTOR_115",
-      "name": "CLP do painel e motor: Resultado dos LEDs",
+      "name": "LEDs - Resultado do último comando",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
@@ -471,7 +471,7 @@
     },
     {
       "xid": "DP_CTRL_LED1",
-      "name": "Controle: LED 1 (verde): ligar/desligar",
+      "name": "Controle - LED 1 (verde): ligar/desligar",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CONTROLES",
@@ -494,7 +494,7 @@
     },
     {
       "xid": "DP_CTRL_LED2",
-      "name": "Controle: LED 2 (amarelo): ligar/desligar",
+      "name": "Controle - LED 2 (amarelo): ligar/desligar",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CONTROLES",
@@ -517,7 +517,7 @@
     },
     {
       "xid": "DP_CTRL_LED3",
-      "name": "Controle: LED 3 (vermelho): ligar/desligar",
+      "name": "Controle - LED 3 (vermelho): ligar/desligar",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CONTROLES",
@@ -540,7 +540,7 @@
     },
     {
       "xid": "DP_CTRL_LED4",
-      "name": "Controle: LED 4 (azul): ligar/desligar",
+      "name": "Controle - LED 4 (azul): ligar/desligar",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CONTROLES",
@@ -562,8 +562,8 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CTRL_DISJUNTOR",
-      "name": "Controle: Disjuntor DJ-01: fechar/abrir",
+      "xid": "DP_CTRL_DJ_GERAL",
+      "name": "Controle - Chave 1 - Disjuntor geral (fechar/abrir)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CONTROLES",
@@ -585,31 +585,8 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CTRL_SECCIONADORA",
-      "name": "Controle: Seccionadora SC-01: fechar/abrir",
-      "enabled": true,
-      "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CONTROLES",
-      "pointLocator": {
-        "dataType": "BINARY",
-        "changeType": {
-          "type": "NO_CHANGE",
-          "startValue": "true"
-        },
-        "settable": true
-      },
-      "textRenderer": {
-        "type": "BINARY",
-        "zeroLabel": "Aberto",
-        "zeroColour": "#d6453d",
-        "oneLabel": "Fechado",
-        "oneColour": "#2e9e44"
-      },
-      "eventDetectors": []
-    },
-    {
-      "xid": "DP_CTRL_INVERSOR",
-      "name": "Controle: Inversor INV-01: ligar/parar",
+      "xid": "DP_CTRL_DJ_MOTOR",
+      "name": "Controle - Chave 2 - Disjuntor do motor (fechar/abrir)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CONTROLES",
@@ -623,9 +600,32 @@
       },
       "textRenderer": {
         "type": "BINARY",
-        "zeroLabel": "Desligado",
-        "zeroColour": "#888888",
-        "oneLabel": "Ligado",
+        "zeroLabel": "Aberto",
+        "zeroColour": "#d6453d",
+        "oneLabel": "Fechado",
+        "oneColour": "#2e9e44"
+      },
+      "eventDetectors": []
+    },
+    {
+      "xid": "DP_CTRL_DJ_INVERSOR",
+      "name": "Controle - Chave 3 - Disjuntor do inversor (fechar/abrir)",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "dataSourceXid": "DS_CONTROLES",
+      "pointLocator": {
+        "dataType": "BINARY",
+        "changeType": {
+          "type": "NO_CHANGE",
+          "startValue": "false"
+        },
+        "settable": true
+      },
+      "textRenderer": {
+        "type": "BINARY",
+        "zeroLabel": "Aberto",
+        "zeroColour": "#d6453d",
+        "oneLabel": "Fechado",
         "oneColour": "#2e9e44"
       },
       "eventDetectors": []
@@ -697,49 +697,49 @@
       "disabled": false
     },
     {
-      "xid": "PL_CTRL_DISJUNTOR",
-      "sourcePointId": "DP_CTRL_DISJUNTOR",
+      "xid": "PL_CTRL_DJ_GERAL",
+      "sourcePointId": "DP_CTRL_DJ_GERAL",
       "targetPointId": "DP_IED_DE_PROTECAO_100",
       "script": "return source.value ? 1 : 2;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_ESTADO_DISJUNTOR",
+      "xid": "PL_ESTADO_DJ_GERAL",
       "sourcePointId": "DP_IED_DE_PROTECAO_0",
-      "targetPointId": "DP_CTRL_DISJUNTOR",
+      "targetPointId": "DP_CTRL_DJ_GERAL",
       "script": "return source.value == 1;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_CTRL_SECCIONADORA",
-      "sourcePointId": "DP_CTRL_SECCIONADORA",
+      "xid": "PL_CTRL_DJ_MOTOR",
+      "sourcePointId": "DP_CTRL_DJ_MOTOR",
       "targetPointId": "DP_CLP_DE_GERACAO_104",
       "script": "return source.value ? 1 : 2;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_ESTADO_SECCIONADORA",
+      "xid": "PL_ESTADO_DJ_MOTOR",
       "sourcePointId": "DP_CLP_DE_GERACAO_9",
-      "targetPointId": "DP_CTRL_SECCIONADORA",
+      "targetPointId": "DP_CTRL_DJ_MOTOR",
       "script": "return source.value == 1;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_CTRL_INVERSOR",
-      "sourcePointId": "DP_CTRL_INVERSOR",
+      "xid": "PL_CTRL_DJ_INVERSOR",
+      "sourcePointId": "DP_CTRL_DJ_INVERSOR",
       "targetPointId": "DP_CLP_DE_GERACAO_101",
       "script": "return source.value ? 1 : 2;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_ESTADO_INVERSOR",
+      "xid": "PL_ESTADO_DJ_INVERSOR",
       "sourcePointId": "DP_CLP_DE_GERACAO_1",
-      "targetPointId": "DP_CTRL_INVERSOR",
+      "targetPointId": "DP_CTRL_DJ_INVERSOR",
       "script": "return source.value == 1;",
       "event": "CHANGE",
       "disabled": false
