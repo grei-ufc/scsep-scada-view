@@ -14,14 +14,6 @@ Sala 3D (site) ──► Servidor do laboratório ◄── HTTPS (só saída) �
 | `mysql` | Banco do Scada-LTS |
 | `rede` | Contêiner mínimo dono da rede compartilhada |
 
-## Tutorial completo (PDF)
-
-0. [`docs/03-instalacao-simples-vpn-local.pdf`](docs/03-instalacao-simples-vpn-local.pdf): **comece por aqui**: instalação simples, para quem não é técnico.
-1. [`docs/01-instalacao-wsl-docker-scada-vpn-local.pdf`](docs/01-instalacao-wsl-docker-scada-vpn-local.pdf): instalar WSL, Docker, Scada-LTS e a vpn-local, passo a passo com espaços para print.
-2. [`docs/02-primeiros-passos-no-scada-lts.pdf`](docs/02-primeiros-passos-no-scada-lts.pdf): usuários e senhas, Data Source e registradores Modbus TCP no Scada-LTS.
-
-Manual de registradores: [`docs/registradores-no-scada-lts.pdf`](docs/registradores-no-scada-lts.pdf) (documento anterior, ainda usa o nome antigo "Ponte").
-
 ## Como baixar
 
 O pacote está neste repositório do GitHub: https://github.com/grei-ufc/scsep-scada-view
@@ -49,11 +41,9 @@ cd scsep-scada-view
 
 3. Se aparecer "Permission denied" ao rodar um `.sh`, use `bash instalar.sh`.
 
-**Para ler os PDFs:** abra a pasta `docs/` no GitHub, ou, no Ubuntu, rode `explorer.exe docs` (abre a pasta no Windows).
-
 ## Início rápido
 
-Pré-requisitos: Windows 10 ou 11 com **WSL e Ubuntu** instalados (passos 1 e 2 do PDF 03) e uma conta no site do laboratório. **O Docker não precisa estar instalado:** o `instalar.sh` instala.
+Pré-requisitos: Windows 10 ou 11 com **WSL e Ubuntu** instalados (no PowerShell como administrador: `wsl --install -d Ubuntu`; reinicie o computador e crie o usuário e a senha do Ubuntu) e uma conta no site do laboratório. **O Docker não precisa estar instalado:** o `instalar.sh` instala.
 
 ```bash
 # 1. Baixe o pacote e entre na pasta (veja "Como baixar")
@@ -100,7 +90,6 @@ docker-compose.yml       # rede, mysql, vpn-local, scadalts
 .env.example             # modelo de configuração (copie para .env)
 vpn-local/               # Dockerfile e vpn-local-service.cjs (a vpn-local como serviço, gerado)
 scada-lts/               # importar.py (aplica a configuração sozinho) e scada-lts-import.json: 4 Data Sources, 25 pontos, 14 point links e a tela gráfica "Painel de comando" (botões e LEDs clicáveis)
-docs/                    # tutoriais em PDF
 ```
 
 ## Segurança

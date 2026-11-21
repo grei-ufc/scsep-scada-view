@@ -7,7 +7,7 @@ cd "$(dirname "$0")"
 # Docker Desktop / Docker moderno: "docker compose". Docker antigo do apt: "docker-compose".
 if docker compose version >/dev/null 2>&1; then DC="docker compose"
 elif command -v docker-compose >/dev/null 2>&1; then DC="docker-compose"
-else echo "ERRO: Docker não encontrado. Veja o passo 1 do tutorial."; exit 1; fi
+else echo "ERRO: Docker não encontrado. Rode ./instalar.sh para instalar o Docker."; exit 1; fi
 docker info >/dev/null 2>&1 || { echo "ERRO: o Docker não está rodando (abra o Docker Desktop ou rode: sudo service docker start)."; exit 1; }
 
 [ -f .env ] || cp .env.example .env
@@ -36,7 +36,7 @@ echo "Aguardando a vpn-local falar com o servidor..."
 for _ in $(seq 1 30); do
   log="$(docker logs vpn-local 2>&1 | tail -20)"
   if echo "$log" | grep -q "ativada com sucesso\|credencial salva"; then echo "OK: vpn-local ativada e conectada."; break; fi
-  if echo "$log" | grep -q "ERRO na ativa"; then echo "$log" | grep "ERRO na ativa" | tail -1; echo "Veja a seção \"Se algo der errado\" do tutorial."; exit 1; fi
+  if echo "$log" | grep -q "ERRO na ativa"; then echo "$log" | grep "ERRO na ativa" | tail -1; echo "Confira o token (site > Meu laboratório) e rode ./iniciar.sh de novo."; exit 1; fi
   sleep 2
 done
 
@@ -57,10 +57,10 @@ if [ ! -f .scada-config-aplicada ]; then
     if python3 scada-lts/importar.py scada-lts/scada-lts-import.json "http://localhost:${porta}/Scada-LTS"; then
       touch .scada-config-aplicada
     else
-      echo "AVISO: não consegui importar sozinho. Importe à mão: PDF 02, tópico 10 (arquivo scada-lts/scada-lts-import.json)."
+      echo "AVISO: não consegui importar sozinho. Rode: python3 scada-lts/importar.py (ou importe scada-lts/scada-lts-import.json em Import/Export)."
     fi
   else
-    echo "AVISO: python3 não encontrado. Importe à mão o arquivo scada-lts/scada-lts-import.json (PDF 02, tópico 10)."
+    echo "AVISO: python3 não encontrado. Importe à mão o arquivo scada-lts/scada-lts-import.json em Import/Export."
   fi
 fi
 
