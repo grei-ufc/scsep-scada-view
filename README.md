@@ -93,6 +93,19 @@ sudo apt update && sudo apt install -y curl && curl -fsSL https://raw.githubuser
 
 Se o primeiro `sudo apt update` já falhar por causa das chaves, rode antes: `sudo curl -fsSL -o /usr/share/keyrings/kali-archive-keyring.gpg https://archive.kali.org/archive-keyring.gpg`. O resto é igual ao Ubuntu (também para quem já tem um Scada-LTS).
 
+## Já tenho Scada-LTS e quero MANTER o meu
+
+Se você já tem um Scada-LTS rodando e **não quer pará-lo**, use este comando: ele instala só o **vpn-local**, liga-o ao **seu** Scada-LTS e **aplica nele a configuração do laboratório** (4 Data Sources, 25 pontos, os controles liga/desliga e a tela **Painel de comando**). Nada que você já tem é parado, apagado ou alterado: a configuração só é **adicionada** (ele pergunta antes). Serve no Ubuntu e no Kali:
+
+```bash
+sudo apt update && sudo apt install -y curl && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/instalar-no-meu-scada.sh | bash
+```
+
+- Ele acha sozinho o container do Scada-LTS; se houver mais de um, pergunta o nome (`docker ps`). Para informar direto: `LAB_ALVO=NOME_DO_CONTAINER` antes do comando, ou `./so-vpn-local.sh NOME_DO_CONTAINER` com o pacote baixado.
+- Se o admin do seu Scada-LTS **não** for `admin`/`admin`, ele pede o usuário e a senha.
+- Se você **recriar** o container do Scada-LTS, rode o comando de novo (o vpn-local usa a rede dele).
+- Para **parar o seu** e usar o do laboratório, use o comando principal (`instalar.sh`), na seção abaixo.
+
 ## Já tenho Docker e um Scada-LTS
 
 **O mesmo comando de cima serve.** Se ele achar um Scada-LTS seu rodando (ou containers com os mesmos nomes do laboratório, como `mysql` e `scadalts`), ele mostra o que vai parar e **pergunta antes**. Nada é apagado: os containers são parados e, quando o nome é igual ao do laboratório, renomeados com `-anterior`. Para **voltar ao seu Scada-LTS**: `cd ~/scsep-scada-view && ./voltar-ao-scada-anterior.sh`.
@@ -133,6 +146,7 @@ Troque `PORTA` pela porta do seu Scada-LTS. Se a senha do admin não for `admin`
 
 ```
 trocar-scada.sh          # atalho antigo: chama o instalar.sh
+instalar-no-meu-scada.sh # para quem já tem Scada-LTS e quer MANTER o dele: instala o vpn-local e aplica a configuração
 so-vpn-local.sh          # para quem já tem Docker e Scada-LTS: sobe só o vpn-local ligado ao seu Scada-LTS
 instalar-kali.sh         # o mesmo, para Kali Linux (Debian)
 instalar.sh              # instala o Docker (se faltar) e chama o iniciar.sh

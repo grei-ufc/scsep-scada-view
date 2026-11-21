@@ -94,6 +94,12 @@ if ! id -nG "$USER" | grep -qw docker; then
   sudo usermod -aG docker "$USER"
 fi
 
+# 5b) Modo "já tenho um Scada-LTS e quero MANTER o meu": não para nada; só liga o vpn-local ao Scada-LTS dele
+#     e aplica a configuração do laboratório nele (veja so-vpn-local.sh)
+if [ "${LAB_MODO:-}" = "meu-scada" ]; then
+  if docker info >/dev/null 2>&1; then exec ./so-vpn-local.sh; else exec sg docker -c "./so-vpn-local.sh"; fi
+fi
+
 # 6) Se você JÁ TEM um Scada-LTS rodando, o dele é PARADO (nada é apagado) para não conflitar com o do laboratório.
 DK="docker"; docker info >/dev/null 2>&1 || DK="sudo docker"
 do_pacote() { [ "$($DK inspect -f '{{index .Config.Labels "com.docker.compose.project"}}' "$1" 2>/dev/null)" = "scada-lab" ]; }
