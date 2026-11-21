@@ -16,6 +16,7 @@ Sala 3D (site) ──► Servidor do laboratório ◄── HTTPS (só saída) �
 
 ## Tutorial completo (PDF)
 
+0. [`docs/03-instalacao-simples-vpn-local.pdf`](docs/03-instalacao-simples-vpn-local.pdf): **comece por aqui**: instalação simples, para quem não é técnico.
 1. [`docs/01-instalacao-wsl-docker-scada-vpn-local.pdf`](docs/01-instalacao-wsl-docker-scada-vpn-local.pdf): instalar WSL, Docker, Scada-LTS e a vpn-local, passo a passo com espaços para print.
 2. [`docs/02-primeiros-passos-no-scada-lts.pdf`](docs/02-primeiros-passos-no-scada-lts.pdf): usuários e senhas, Data Source e registradores Modbus TCP no Scada-LTS.
 
@@ -33,8 +34,8 @@ cd <NOME-DA-PASTA>
 
 # 2. Pegar o token: site do laboratório > Meu laboratório > Token de ativação > Copiar token
 
-# 3. Subir (o script pergunta o token e grava o .env)
-./iniciar.sh
+# 3. Instalar e subir: instala o Docker se faltar e pergunta o token
+./instalar.sh        # nas próximas vezes: ./iniciar.sh
 ```
 
 Depois de 1 a 3 minutos, abra **http://localhost:8080/Scada-LTS/** (`admin` / `admin`; troque a senha) e importe `scada-lts/scada-lts-import.json` em **Import/Export**.
@@ -65,6 +66,7 @@ O token só é lido na primeira ativação; depois a vpn-local guarda a credenci
 ## Conteúdo
 
 ```
+instalar.sh              # instala o Docker (se faltar) e chama o iniciar.sh
 iniciar.sh               # pergunta o token, grava o .env e sobe tudo
 docker-compose.yml       # rede, mysql, vpn-local, scadalts
 .env.example             # modelo de configuração (copie para .env)
