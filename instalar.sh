@@ -27,9 +27,22 @@ apt_instalar() {
   sudo apt-get install -y "$@"
 }
 
+os_val() { grep -E "^$1=" /etc/os-release 2>/dev/null | head -1 | cut -d= -f2- | tr -d '"' || true; }
+detectar_distro() {
+  [ -r /etc/os-release ] || { echo "ERRO: não consegui identificar a distribuição (sem /etc/os-release)."; exit 1; }
+  local id like pretty; id="$(os_val ID)"; like="$(os_val ID_LIKE)"; pretty="$(os_val PRETTY_NAME)"
+  case " $id $like " in
+    *" ubuntu "*) DISTRO="Ubuntu" ;;
+    *" kali "*)   DISTRO="Kali Linux (base Debian)" ;;
+    *" debian "*) DISTRO="Debian" ;;
+    *) echo "ERRO: distribuição não suportada ($pretty). Este instalador é para Debian, Ubuntu e derivados (como o Kali)."; exit 1 ;;
+  esac
+  echo "Distribuição detectada: $DISTRO ($pretty)"
+}
+
 echo "== Laboratório Virtual: instalação =="
 eh_kali && echo "(Kali Linux detectado: usando os pacotes do Debian/Kali)"
-echo "Se o Ubuntu pedir a sua senha, digite-a (ela não aparece na tela) e aperte Enter."
+echo "Se o sistema pedir a sua senha, digite-a (ela não aparece na tela) e aperte Enter."
 
 # 0) Pacote: se este script não está dentro da pasta do pacote, baixa o pacote primeiro e continua de lá
 AQUI="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" 2>/dev/null && pwd || true)"
@@ -47,6 +60,8 @@ if [ -z "$AQUI" ] || [ ! -f "$AQUI/docker-compose.yml" ]; then
   if [ -r /dev/tty ] && ! [ -t 0 ]; then exec bash ./instalar.sh < /dev/tty; else exec bash ./instalar.sh; fi
 fi
 cd "$AQUI"
+detectar_distro
+[ "${INSTALAR_SO_DISTRO:-0}" = 1 ] && { echo "(modo teste: só identificou a distribuição)"; exit 0; }
 
 # 1) Docker e Docker Compose, numa rodada só do apt. O nome do pacote do Compose muda conforme a distribuição:
 #    Ubuntu: docker-compose-v2 | Debian/Kali: docker-compose (v2) | outros: docker-compose-plugin
@@ -111,6 +126,16 @@ while read -r n; do
   [[ " ${lista[*]:-} " == *" $n "* ]] || lista+=("$n")
 done < <($DK ps --filter "publish=$PORTA" --format '{{.Names}}')
 
+# Modo "parar tudo": também entram na lista os containers cuja imagem seja de Scada-LTS, mesmo com outro nome
+if [ "${LAB_PARAR_TUDO:-0}" = 1 ]; then
+  while IFS=$'	' read -r n img; do
+    [ -n "$n" ] || continue
+    do_pacote "$n" && continue
+    echo "$img" | grep -qi scada || continue
+    [[ " ${lista[*]:-} " == *" $n "* ]] || lista+=("$n")
+  done < <($DK ps --format '{{.Names}}	{{.Image}}')
+fi
+
 if [ "${#lista[@]}" -gt 0 ]; then
   echo
   echo "Achei um Scada-LTS (ou containers com os mesmos nomes do laboratório / usando a porta $PORTA):"
@@ -131,7 +156,7 @@ if [ "${#lista[@]}" -gt 0 ]; then
       if [ "$p" = "$n" ]; then novo="$n-anterior-$carimbo"; $DK rename "$n" "$novo"; volta+=("docker rename $novo $n"); fi
     done
     [ "$rodando" = true ] && iniciar_de_novo+=("$n")
-    echo "  parado: $n -> $novo"
+    if [ "$novo" != "$n" ]; then echo "  parado: $n (renomeado para $novo)"; else echo "  parado: $n"; fi
   done
   volta+=("docker start ${iniciar_de_novo[*]:-} >/dev/null 2>&1 || true" 'echo "Pronto: o seu Scada-LTS anterior voltou."')
   printf '%s\n' "${volta[@]}" > voltar-ao-scada-anterior.sh; chmod +x voltar-ao-scada-anterior.sh
@@ -152,5 +177,5 @@ fi
 if docker info >/dev/null 2>&1; then
   exec ./iniciar.sh
 else
-  exec sg docker -c "./iniciar.sh"
+  exec sg docker -c "LAB_SEM_TOKEN=${LAB_SEM_TOKEN:-0} ./iniciar.sh"
 fi

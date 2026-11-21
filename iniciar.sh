@@ -21,7 +21,7 @@ ja_ativada=0
 docker volume inspect scada-lab_vpn-local_data >/dev/null 2>&1 && ja_ativada=1
 
 chave="$(valor CHAVE)"
-if [ "$ja_ativada" = 0 ] && [ -z "$chave" ]; then
+if [ "$ja_ativada" = 0 ] && [ -z "$chave" ] && [ "${LAB_SEM_TOKEN:-0}" != 1 ]; then
   echo "Cole o seu token de ativação (site do laboratório > Meu laboratório > Copiar token)."
   read -rp "Token (começa com ak_): " chave
   chave="$(echo "$chave" | tr -d '[:space:]"'"'"'')"
@@ -32,8 +32,12 @@ fi
 echo "Subindo os contêineres (na primeira vez baixa as imagens; pode levar alguns minutos)..."
 $DC up -d --build
 
-echo "Aguardando o vpn-local falar com o servidor..."
+sem_token=0
+if [ "${LAB_SEM_TOKEN:-0}" = 1 ] && [ "$ja_ativada" = 0 ] && [ -z "$(valor CHAVE)" ]; then sem_token=1; fi
+[ "$sem_token" = 1 ] && echo "Token pendente: o vpn-local subiu, mas só se conecta ao servidor depois que você adicionar o token."
+[ "$sem_token" = 1 ] || echo "Aguardando o vpn-local falar com o servidor..."
 for _ in $(seq 1 30); do
+  [ "$sem_token" = 1 ] && break
   log="$(docker logs vpn-local 2>&1 | tail -20)"
   if echo "$log" | grep -q "ativada com sucesso\|credencial salva"; then echo "OK: vpn-local ativado e conectado."; break; fi
   if echo "$log" | grep -q "ERRO na ativa"; then echo "$log" | grep "ERRO na ativa" | tail -1; echo "Confira o token (site > Meu laboratório) e rode ./iniciar.sh de novo."; exit 1; fi
@@ -65,4 +69,5 @@ if [ ! -f .scada-config-aplicada ]; then
 fi
 
 echo
+[ "$sem_token" = 1 ] && echo "FALTA SÓ O TOKEN. Quando tiver (site > Meu laboratório > Copiar token), rode:  cd $PWD && ./adicionar-token.sh"
 echo "Pronto. Abra no navegador do Windows:  http://localhost:${porta}/Scada-LTS/   (admin / admin)"

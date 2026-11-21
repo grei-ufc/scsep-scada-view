@@ -93,6 +93,22 @@ sudo apt update && sudo apt install -y curl && curl -fsSL https://raw.githubuser
 
 Se o primeiro `sudo apt update` já falhar por causa das chaves, rode antes: `sudo curl -fsSL -o /usr/share/keyrings/kali-archive-keyring.gpg https://archive.kali.org/archive-keyring.gpg`. O resto é igual ao Ubuntu (também para quem já tem um Scada-LTS).
 
+## Instalar agora e colocar o token depois (Debian/Ubuntu)
+
+Este comando **identifica a distribuição** (Debian, Ubuntu ou derivados, como o Kali), **para o Scada-LTS que você já tem** (os containers de Scada-LTS; nada é apagado e ele **pergunta antes**), instala o laboratório e deixa pronto, **já com as conexões Modbus** (Data Sources, pontos, controles e a tela Painel de comando). O **token fica para depois**:
+
+```bash
+sudo apt update && sudo apt install -y curl && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/instalar-sem-token.sh | bash
+```
+
+Quando tiver o token (site > Meu laboratório > Copiar token), adicione-o:
+
+```bash
+cd ~/scsep-scada-view && ./adicionar-token.sh
+```
+
+Para voltar ao seu Scada-LTS: `./voltar-ao-scada-anterior.sh` (na mesma pasta). Em outra distribuição (Fedora, por exemplo) o instalador recusa com uma mensagem clara.
+
 ## Já tenho Scada-LTS e quero MANTER o meu
 
 Se você já tem um Scada-LTS rodando e **não quer pará-lo**, use este comando: ele instala só o **vpn-local**, liga-o ao **seu** Scada-LTS e **aplica nele a configuração do laboratório** (4 Data Sources, 25 pontos, os controles liga/desliga e a tela **Painel de comando**). Nada que você já tem é parado, apagado ou alterado: a configuração só é **adicionada** (ele pergunta antes). Serve no Ubuntu e no Kali:
@@ -146,6 +162,8 @@ Troque `PORTA` pela porta do seu Scada-LTS. Se a senha do admin não for `admin`
 
 ```
 trocar-scada.sh          # atalho antigo: chama o instalar.sh
+instalar-sem-token.sh    # Debian/Ubuntu: para o Scada-LTS existente, instala o nosso com as conexões; token depois
+adicionar-token.sh       # adiciona (ou troca) o token do vpn-local depois da instalação
 instalar-no-meu-scada.sh # para quem já tem Scada-LTS e quer MANTER o dele: instala o vpn-local e aplica a configuração
 so-vpn-local.sh          # para quem já tem Docker e Scada-LTS: sobe só o vpn-local ligado ao seu Scada-LTS
 instalar-kali.sh         # o mesmo, para Kali Linux (Debian)
