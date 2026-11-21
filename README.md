@@ -18,6 +18,16 @@ Sala 3D (site) ──► Servidor do laboratório ◄── HTTPS (só saída) �
 
 O pacote está neste repositório do GitHub: https://github.com/grei-ufc/scsep-scada-view
 
+**Mais rápido: uma linha só.** Com o WSL e o Ubuntu abertos, copie e cole **esta linha** no terminal do Ubuntu e aperte Enter. Ela baixa o pacote (instala o `git` se faltar), instala o Docker se faltar e sobe o laboratório, perguntando o seu token:
+
+```bash
+sudo apt update && sudo apt install -y curl && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/instalar.sh | bash
+```
+
+O pacote fica na pasta `~/scsep-scada-view`. Nas próximas vezes: `cd ~/scsep-scada-view && ./iniciar.sh`.
+
+Se preferir baixar o pacote antes, use uma das opções abaixo.
+
 **Opção A: pelo terminal (recomendada)**
 
 ```bash
