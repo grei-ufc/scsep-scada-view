@@ -86,9 +86,22 @@ if [ "$n_cont" -gt 0 ] || [ "$n_img" -gt 0 ]; then
   echo
 fi
 
+# Garante que a pasta do pacote existe e está completa. Se ela foi apagada, nunca foi criada ou ficou pela metade,
+# baixa o pacote de novo (a pasta antiga, se houver, é guardada com o sufixo .antigo, e o seu .env é aproveitado).
+if [ ! -f "$PWD/iniciar.sh" ] || [ ! -f "$PWD/docker-compose.yml" ]; then
+  echo "A pasta do pacote não existe ou está incompleta; baixando de novo em $DESTINO ..."
+  command -v git >/dev/null 2>&1 || sudo dnf install -y git
+  if [ -d "$DESTINO/.git" ] && git -C "$DESTINO" pull -q --ff-only 2>/dev/null; then :; else
+    [ -e "$DESTINO" ] && mv "$DESTINO" "$DESTINO.antigo-$(date +%Y%m%d%H%M)"
+    git clone -q "$REPO" "$DESTINO"
+    for a in "$DESTINO".antigo-*; do if [ -f "$a/.env" ]; then cp "$a/.env" "$DESTINO/.env"; break; fi; done
+  fi
+  cd "$DESTINO"
+fi
+
 # 5) Sobe o laboratório (Scada-LTS + vpn-local). Se LAB_SEM_TOKEN=1, o token fica para depois (./adicionar-token.sh)
 if docker info >/dev/null 2>&1; then
-  exec ./iniciar.sh
+  exec bash ./iniciar.sh
 else
-  exec sg docker -c "LAB_SEM_TOKEN=${LAB_SEM_TOKEN:-0} ./iniciar.sh"
+  exec sg docker -c "LAB_SEM_TOKEN=${LAB_SEM_TOKEN:-0} bash ./iniciar.sh"
 fi

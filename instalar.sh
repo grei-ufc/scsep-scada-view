@@ -109,10 +109,23 @@ if ! id -nG "$USER" | grep -qw docker; then
   sudo usermod -aG docker "$USER"
 fi
 
+# Garante que a pasta do pacote existe e está completa. Se ela foi apagada, nunca foi criada ou ficou pela metade,
+# baixa o pacote de novo (a pasta antiga, se houver, é guardada com o sufixo .antigo, e o seu .env é aproveitado).
+if [ ! -f "$PWD/iniciar.sh" ] || [ ! -f "$PWD/docker-compose.yml" ]; then
+  echo "A pasta do pacote não existe ou está incompleta; baixando de novo em $DESTINO ..."
+  command -v git >/dev/null 2>&1 || apt_instalar git
+  if [ -d "$DESTINO/.git" ] && git -C "$DESTINO" pull -q --ff-only 2>/dev/null; then :; else
+    [ -e "$DESTINO" ] && mv "$DESTINO" "$DESTINO.antigo-$(date +%Y%m%d%H%M)"
+    git clone -q "$REPO" "$DESTINO"
+    for a in "$DESTINO".antigo-*; do if [ -f "$a/.env" ]; then cp "$a/.env" "$DESTINO/.env"; break; fi; done
+  fi
+  cd "$DESTINO"
+fi
+
 # 5b) Modo "já tenho um Scada-LTS e quero MANTER o meu": não para nada; só liga o vpn-local ao Scada-LTS dele
 #     e aplica a configuração do laboratório nele (veja so-vpn-local.sh)
 if [ "${LAB_MODO:-}" = "meu-scada" ]; then
-  if docker info >/dev/null 2>&1; then exec ./so-vpn-local.sh; else exec sg docker -c "./so-vpn-local.sh"; fi
+  if docker info >/dev/null 2>&1; then exec bash ./so-vpn-local.sh; else exec sg docker -c "bash ./so-vpn-local.sh"; fi
 fi
 
 # 6) Se você JÁ TEM um Scada-LTS rodando, o dele é PARADO (nada é apagado) para não conflitar com o do laboratório.
@@ -175,7 +188,7 @@ fi
 
 # 7) Pergunta o token e sobe o laboratório (já com o grupo docker, sem precisar reabrir o Ubuntu)
 if docker info >/dev/null 2>&1; then
-  exec ./iniciar.sh
+  exec bash ./iniciar.sh
 else
-  exec sg docker -c "LAB_SEM_TOKEN=${LAB_SEM_TOKEN:-0} ./iniciar.sh"
+  exec sg docker -c "LAB_SEM_TOKEN=${LAB_SEM_TOKEN:-0} bash ./iniciar.sh"
 fi
