@@ -26,6 +26,8 @@ sudo apt update && sudo apt install -y curl && curl -fsSL https://raw.githubuser
 
 O pacote fica na pasta `~/scsep-scada-view`. Nas próximas vezes: `cd ~/scsep-scada-view && ./iniciar.sh`.
 
+Funciona para quem só tem o WSL, para quem já tem o Docker e para quem já tem um Scada-LTS rodando (veja "Já tenho Docker e um Scada-LTS").
+
 Se preferir baixar o pacote antes, use uma das opções abaixo.
 
 **Opção A: pelo terminal (recomendada)**
@@ -81,15 +83,9 @@ No arquivo `.env`, na linha `CHAVE=`. Sem o script: `cp .env.example .env`, edit
 
 O token só é lido na primeira ativação; depois o vpn-local guarda a credencial no volume `scada-lab_vpn-local_data`. Para trocar de token: `docker compose down`, `docker volume rm scada-lab_vpn-local_data`, ajuste `CHAVE` e `docker compose up -d`.
 
-## Já tenho Docker e um Scada-LTS: trocar pelo do laboratório
+## Já tenho Docker e um Scada-LTS
 
-Para **parar o seu Scada-LTS** (sem apagar nada) e rodar o do laboratório, que já vem com o vpn-local, cole no terminal do Ubuntu:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/trocar-scada.sh | bash
-```
-
-O script mostra o que vai parar e **pergunta antes**. Containers com os mesmos nomes do laboratório (`mysql`, `scadalts`...) são renomeados com `-anterior`. Para **voltar ao seu Scada-LTS**: `cd ~/scsep-scada-view && ./voltar-ao-scada-anterior.sh`.
+**O mesmo comando de cima serve.** Se ele achar um Scada-LTS seu rodando (ou containers com os mesmos nomes do laboratório, como `mysql` e `scadalts`), ele mostra o que vai parar e **pergunta antes**. Nada é apagado: os containers são parados e, quando o nome é igual ao do laboratório, renomeados com `-anterior`. Para **voltar ao seu Scada-LTS**: `cd ~/scsep-scada-view && ./voltar-ao-scada-anterior.sh`.
 
 ## Já tenho Docker e Scada-LTS: como ligar o vpn-local
 
@@ -126,7 +122,7 @@ Troque `PORTA` pela porta do seu Scada-LTS. Se a senha do admin não for `admin`
 ## Conteúdo
 
 ```
-trocar-scada.sh          # para quem já tem Scada-LTS: para o dele e instala o do laboratório (voltar-ao-scada-anterior.sh desfaz)
+trocar-scada.sh          # atalho antigo: chama o instalar.sh
 so-vpn-local.sh          # para quem já tem Docker e Scada-LTS: sobe só o vpn-local ligado ao seu Scada-LTS
 instalar.sh              # instala o Docker (se faltar) e chama o iniciar.sh
 iniciar.sh               # pergunta o token, grava o .env e sobe tudo
