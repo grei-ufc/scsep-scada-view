@@ -2,7 +2,7 @@
   "dataSources": [
     {
       "xid": "DS_IED_DE_PROTECAO",
-      "name": "IED de proteção (disjuntor geral e corrente)",
+      "name": "IED de proteção (disjuntor geral)",
       "enabled": true,
       "type": "MODBUS_IP",
       "alarmLevels": {
@@ -29,7 +29,7 @@
     },
     {
       "xid": "DS_CLP_DE_GERACAO",
-      "name": "CLP de geração (disjuntores do motor e do inversor)",
+      "name": "CLP de geração (motor e inversor)",
       "enabled": true,
       "type": "MODBUS_IP",
       "alarmLevels": {
@@ -93,7 +93,7 @@
   "dataPoints": [
     {
       "xid": "DP_IED_DE_PROTECAO_0",
-      "name": "Chave 1 - Disjuntor geral - Estado (1=fechado)",
+      "name": "Chave 1 - Disjuntor geral - Estado (1=fechado) [HR 0 · closed]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_IED_DE_PROTECAO",
@@ -114,7 +114,7 @@
     },
     {
       "xid": "DP_IED_DE_PROTECAO_5",
-      "name": "Medição - Corrente (A)",
+      "name": "Medição - Corrente (A) [HR 5 · current_a]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_IED_DE_PROTECAO",
@@ -135,7 +135,7 @@
     },
     {
       "xid": "DP_IED_DE_PROTECAO_100",
-      "name": "Chave 1 - Disjuntor geral - Comando (1=fechar, 2=abrir)",
+      "name": "Chave 1 - Disjuntor geral - Comando (1=fechar, 2=abrir) [HR 100 · close/open]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_IED_DE_PROTECAO",
@@ -156,7 +156,7 @@
     },
     {
       "xid": "DP_IED_DE_PROTECAO_110",
-      "name": "Chave 1 - Disjuntor geral - Resultado do último comando",
+      "name": "Chave 1 - Disjuntor geral - Resultado do último comando [HR 110 · status]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_IED_DE_PROTECAO",
@@ -177,7 +177,7 @@
     },
     {
       "xid": "DP_CLP_DE_GERACAO_1",
-      "name": "Chave 3 - Disjuntor do inversor - Estado (1=fechado)",
+      "name": "Chave 3 - Disjuntor do inversor - Estado (1=fechado) [HR 1 · running]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DE_GERACAO",
@@ -198,7 +198,7 @@
     },
     {
       "xid": "DP_CLP_DE_GERACAO_2",
-      "name": "Medição - Potência ativa (kW)",
+      "name": "Medição - Potência ativa (kW) [HR 2 · active_power_kw]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DE_GERACAO",
@@ -219,7 +219,7 @@
     },
     {
       "xid": "DP_CLP_DE_GERACAO_3",
-      "name": "Medição - Tensão CA (V)",
+      "name": "Medição - Tensão CA (V) [HR 3 · ac_voltage_v]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DE_GERACAO",
@@ -240,7 +240,7 @@
     },
     {
       "xid": "DP_CLP_DE_GERACAO_9",
-      "name": "Chave 2 - Disjuntor do motor - Estado (1=fechado)",
+      "name": "Chave 2 - Disjuntor do motor - Estado (1=fechado) [HR 9 · closed]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DE_GERACAO",
@@ -261,7 +261,7 @@
     },
     {
       "xid": "DP_CLP_DE_GERACAO_101",
-      "name": "Chave 3 - Disjuntor do inversor - Comando (1=fechar, 2=abrir)",
+      "name": "Chave 3 - Disjuntor do inversor - Comando (1=fechar, 2=abrir) [HR 101 · start/stop]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DE_GERACAO",
@@ -282,7 +282,7 @@
     },
     {
       "xid": "DP_CLP_DE_GERACAO_104",
-      "name": "Chave 2 - Disjuntor do motor - Comando (1=fechar, 2=abrir)",
+      "name": "Chave 2 - Disjuntor do motor - Comando (1=fechar, 2=abrir) [HR 104 · close/open]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DE_GERACAO",
@@ -303,7 +303,7 @@
     },
     {
       "xid": "DP_CLP_DE_GERACAO_111",
-      "name": "Chave 3 - Disjuntor do inversor - Resultado do último comando",
+      "name": "Chave 3 - Disjuntor do inversor - Resultado do último comando [HR 111 · status]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DE_GERACAO",
@@ -324,7 +324,7 @@
     },
     {
       "xid": "DP_CLP_DE_GERACAO_113",
-      "name": "Chave 2 - Disjuntor do motor - Resultado do último comando",
+      "name": "Chave 2 - Disjuntor do motor - Resultado do último comando [HR 113 · status]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DE_GERACAO",
@@ -345,7 +345,7 @@
     },
     {
       "xid": "DP_CLP_DO_PAINEL_E_MOTOR_15",
-      "name": "LED 1 (verde) - Estado (1=aceso)",
+      "name": "LED 1 (verde) - Estado (1=aceso) [HR 15 · led1]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
@@ -366,7 +366,7 @@
     },
     {
       "xid": "DP_CLP_DO_PAINEL_E_MOTOR_16",
-      "name": "LED 2 (amarelo) - Estado (1=aceso)",
+      "name": "LED 2 (amarelo) - Estado (1=aceso) [HR 16 · led2]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
@@ -387,7 +387,7 @@
     },
     {
       "xid": "DP_CLP_DO_PAINEL_E_MOTOR_17",
-      "name": "LED 3 (vermelho) - Estado (1=aceso)",
+      "name": "LED 3 (vermelho) - Estado (1=aceso) [HR 17 · led3]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
@@ -408,7 +408,7 @@
     },
     {
       "xid": "DP_CLP_DO_PAINEL_E_MOTOR_18",
-      "name": "LED 4 (azul) - Estado (1=aceso)",
+      "name": "LED 4 (azul) - Estado (1=aceso) [HR 18 · led4]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
@@ -429,7 +429,7 @@
     },
     {
       "xid": "DP_CLP_DO_PAINEL_E_MOTOR_106",
-      "name": "LEDs - Comando (1 a 4 acende, 11 a 14 apaga)",
+      "name": "LEDs - Comando (1 a 4 acende, 11 a 14 apaga) [HR 106 · ledN_on/ledN_off]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
@@ -450,7 +450,7 @@
     },
     {
       "xid": "DP_CLP_DO_PAINEL_E_MOTOR_115",
-      "name": "LEDs - Resultado do último comando",
+      "name": "LEDs - Resultado do último comando [HR 115 · status]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
@@ -471,7 +471,7 @@
     },
     {
       "xid": "DP_CTRL_LED1",
-      "name": "Controle - LED 1 (verde): ligar/desligar",
+      "name": "Controle - LED 1 (verde): ligar/desligar [envia HR 106, lê HR 15]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CONTROLES",
@@ -494,7 +494,7 @@
     },
     {
       "xid": "DP_CTRL_LED2",
-      "name": "Controle - LED 2 (amarelo): ligar/desligar",
+      "name": "Controle - LED 2 (amarelo): ligar/desligar [envia HR 106, lê HR 16]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CONTROLES",
@@ -517,7 +517,7 @@
     },
     {
       "xid": "DP_CTRL_LED3",
-      "name": "Controle - LED 3 (vermelho): ligar/desligar",
+      "name": "Controle - LED 3 (vermelho): ligar/desligar [envia HR 106, lê HR 17]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CONTROLES",
@@ -540,7 +540,7 @@
     },
     {
       "xid": "DP_CTRL_LED4",
-      "name": "Controle - LED 4 (azul): ligar/desligar",
+      "name": "Controle - LED 4 (azul): ligar/desligar [envia HR 106, lê HR 18]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CONTROLES",
@@ -563,7 +563,7 @@
     },
     {
       "xid": "DP_CTRL_DJ_GERAL",
-      "name": "Controle - Chave 1 - Disjuntor geral (fechar/abrir)",
+      "name": "Controle - Chave 1 - Disjuntor geral (fechar/abrir) [envia HR 100, lê HR 0]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CONTROLES",
@@ -586,7 +586,7 @@
     },
     {
       "xid": "DP_CTRL_DJ_MOTOR",
-      "name": "Controle - Chave 2 - Disjuntor do motor (fechar/abrir)",
+      "name": "Controle - Chave 2 - Disjuntor do motor (fechar/abrir) [envia HR 104, lê HR 9]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CONTROLES",
@@ -609,7 +609,7 @@
     },
     {
       "xid": "DP_CTRL_DJ_INVERSOR",
-      "name": "Controle - Chave 3 - Disjuntor do inversor (fechar/abrir)",
+      "name": "Controle - Chave 3 - Disjuntor do inversor (fechar/abrir) [envia HR 101, lê HR 1]",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "DS_CONTROLES",
