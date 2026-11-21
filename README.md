@@ -29,8 +29,8 @@ Pré-requisitos: **WSL** e **Docker** já instalados (`docker compose version` f
 ```bash
 # 1. Baixar o pacote
 cd ~
-git clone <ENDEREÇO-DESTE-REPOSITÓRIO>
-cd <NOME-DA-PASTA>
+git clone https://github.com/grei-ufc/scsep-scada-view.git
+cd scsep-scada-view
 
 # 2. Pegar o token: site do laboratório > Meu laboratório > Token de ativação > Copiar token
 
