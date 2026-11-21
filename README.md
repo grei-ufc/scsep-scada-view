@@ -64,7 +64,9 @@ Pré-requisitos: Windows 10 ou 11 com **WSL e Ubuntu** instalados (passos 1 e 2 
 ./instalar.sh        # nas próximas vezes: ./iniciar.sh
 ```
 
-Depois de 1 a 3 minutos, abra **http://localhost:8080/Scada-LTS/** (`admin` / `admin`; troque a senha) e importe `scada-lts/scada-lts-import.json` em **Import/Export**. A importação cria os Data Sources, os pontos, os controles liga/desliga e a tela gráfica **Painel de comando** (menu **Graphic views**), onde você **clica** nos botões e LEDs para comandar a simulação.
+Depois de 1 a 3 minutos, abra **http://localhost:8080/Scada-LTS/** (`admin` / `admin`; troque a senha) Não precisa configurar nada: **o `iniciar.sh` aplica sozinho** (só na primeira vez) a configuração do Scada-LTS, com os Data Sources, os pontos, os controles liga/desliga e a tela gráfica **Painel de comando** (menu **Graphic views**), onde você **clica** nos botões e LEDs para comandar a simulação. Se aparecer "AVISO: não consegui importar sozinho", rode `python3 scada-lts/importar.py` (se você trocou a senha do admin: `SCADA_SENHA=suasenha python3 scada-lts/importar.py`) ou importe `scada-lts/scada-lts-import.json` à mão em **Import/Export**.
+
+**Já instalou antes?** Atualize e aplique a configuração nova: `git pull && ./iniciar.sh`.
 
 ## Onde fica o token
 
@@ -87,7 +89,7 @@ O token só é lido na primeira ativação; depois a vpn-local guarda a credenci
 | Reiniciar a vpn-local / o Scada-LTS | `docker restart vpn-local` / `docker restart scadalts` |
 | Parar tudo (guarda os dados) | `docker compose down` |
 | Apagar tudo, inclusive banco e credencial | `docker compose down -v` |
-| Atualizar o pacote | `git pull && docker compose up -d --build` |
+| Atualizar o pacote e a configuração do Scada-LTS | `git pull && ./iniciar.sh` |
 
 ## Conteúdo
 
@@ -97,7 +99,7 @@ iniciar.sh               # pergunta o token, grava o .env e sobe tudo
 docker-compose.yml       # rede, mysql, vpn-local, scadalts
 .env.example             # modelo de configuração (copie para .env)
 vpn-local/               # Dockerfile e vpn-local-service.cjs (a vpn-local como serviço, gerado)
-scada-lts/               # scada-lts-import.json: 4 Data Sources, 25 pontos, 14 point links e a tela gráfica "Painel de comando" (botões e LEDs clicáveis)
+scada-lts/               # importar.py (aplica a configuração sozinho) e scada-lts-import.json: 4 Data Sources, 25 pontos, 14 point links e a tela gráfica "Painel de comando" (botões e LEDs clicáveis)
 docs/                    # tutoriais em PDF
 ```
 

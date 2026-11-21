@@ -49,5 +49,20 @@ if command -v curl >/dev/null 2>&1; then
     sleep 2
   done
 fi
+# Aplica a configuração do Scada-LTS (Data Sources, pontos, controles liga/desliga e a tela "Painel de comando").
+# Só na primeira vez: reimportar reinicia os controles. Para refazer: apague o arquivo .scada-config-aplicada e rode de novo.
+if [ ! -f .scada-config-aplicada ]; then
+  if command -v python3 >/dev/null 2>&1; then
+    echo "Aplicando a configuração do Scada-LTS (pode levar até 1 minuto)..."
+    if python3 scada-lts/importar.py scada-lts/scada-lts-import.json "http://localhost:${porta}/Scada-LTS"; then
+      touch .scada-config-aplicada
+    else
+      echo "AVISO: não consegui importar sozinho. Importe à mão: PDF 02, tópico 10 (arquivo scada-lts/scada-lts-import.json)."
+    fi
+  else
+    echo "AVISO: python3 não encontrado. Importe à mão o arquivo scada-lts/scada-lts-import.json (PDF 02, tópico 10)."
+  fi
+fi
+
 echo
 echo "Pronto. Abra no navegador do Windows:  http://localhost:${porta}/Scada-LTS/   (admin / admin)"
