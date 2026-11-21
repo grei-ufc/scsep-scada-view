@@ -1,6 +1,6 @@
 # Laboratório Virtual de Subestações: vpn-local + Scada-LTS em Docker
 
-Pacote Docker que sobe, no computador do aluno, o **Scada-LTS** (com MySQL) e a **vpn-local**, a peça que liga o Scada-LTS à simulação 3D do laboratório. Não é preciso instalar nenhum programa no Windows além do WSL e do Docker.
+Pacote Docker que sobe, no computador do aluno, o **Scada-LTS** (com MySQL) e o **vpn-local**, a peça que liga o Scada-LTS à simulação 3D do laboratório. Não é preciso instalar nenhum programa no Windows além do WSL e do Docker.
 
 ```
 Sala 3D (site) ──► Servidor do laboratório ◄── HTTPS (só saída) ── vpn-local ◄── Modbus TCP ── Scada-LTS
@@ -79,14 +79,46 @@ No arquivo `.env`, na linha `CHAVE=`. Sem o script: `cp .env.example .env`, edit
 | `NOME` | Nome desta instalação | `Scada-LTS (Docker)` |
 | `SCADA_PORT` | Porta do Scada-LTS no seu computador | `8080` |
 
-O token só é lido na primeira ativação; depois a vpn-local guarda a credencial no volume `scada-lab_vpn-local_data`. Para trocar de token: `docker compose down`, `docker volume rm scada-lab_vpn-local_data`, ajuste `CHAVE` e `docker compose up -d`.
+O token só é lido na primeira ativação; depois o vpn-local guarda a credencial no volume `scada-lab_vpn-local_data`. Para trocar de token: `docker compose down`, `docker volume rm scada-lab_vpn-local_data`, ajuste `CHAVE` e `docker compose up -d`.
+
+## Já tenho Docker e um Scada-LTS: trocar pelo do laboratório
+
+Para **parar o seu Scada-LTS** (sem apagar nada) e rodar o do laboratório, que já vem com o vpn-local, cole no terminal do Ubuntu:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/trocar-scada.sh | bash
+```
+
+O script mostra o que vai parar e **pergunta antes**. Containers com os mesmos nomes do laboratório (`mysql`, `scadalts`...) são renomeados com `-anterior`. Para **voltar ao seu Scada-LTS**: `cd ~/scsep-scada-view && ./voltar-ao-scada-anterior.sh`.
+
+## Já tenho Docker e Scada-LTS: como ligar o vpn-local
+
+Se você **já tem o Docker e um Scada-LTS rodando** (em outro container), não precisa do pacote completo: suba só o **vpn-local** e ligue-o ao **seu** Scada-LTS. Dentro da pasta do pacote:
+
+```bash
+./so-vpn-local.sh                    # procura sozinho o container do Scada-LTS
+./so-vpn-local.sh NOME_DO_CONTAINER  # ou informe o nome (veja com: docker ps)
+./so-vpn-local.sh --host             # Scada-LTS instalado direto no Linux/WSL, fora do Docker
+```
+
+O script pergunta o token, sobe o vpn-local **na mesma rede do seu Scada-LTS** e avisa quando estiver conectado. Com isso, no seu Scada-LTS os dispositivos Modbus ficam em `127.0.0.11`, `127.0.0.12` e `127.0.0.14` (porta `5020`), os mesmos endereços do pacote completo. Para criar os Data Sources, os pontos, os controles e a tela **Painel de comando** sem fazer à mão:
+
+```bash
+python3 scada-lts/importar.py scada-lts/scada-lts-import.json http://localhost:PORTA/Scada-LTS
+```
+
+Troque `PORTA` pela porta do seu Scada-LTS. Se a senha do admin não for `admin`: `SCADA_SENHA=suasenha python3 scada-lts/importar.py ...`.
+
+- Se você **recriar** o container do Scada-LTS, rode `./so-vpn-local.sh` de novo: o vpn-local usa a rede dele.
+- Se já existir um container chamado `vpn-local` (por exemplo, do pacote completo), o script **pergunta antes de substituir**.
+- Se o seu Scada-LTS roda no **Windows** (fora do WSL), esse caminho não serve: use o pacote completo (`./instalar.sh`).
 
 ## Comandos do dia a dia
 
 | Quero… | Comando |
 |---|---|
-| Ver o que a vpn-local faz | `docker logs -f vpn-local` |
-| Reiniciar a vpn-local / o Scada-LTS | `docker restart vpn-local` / `docker restart scadalts` |
+| Ver o que o vpn-local faz | `docker logs -f vpn-local` |
+| Reiniciar o vpn-local / o Scada-LTS | `docker restart vpn-local` / `docker restart scadalts` |
 | Parar tudo (guarda os dados) | `docker compose down` |
 | Apagar tudo, inclusive banco e credencial | `docker compose down -v` |
 | Atualizar o pacote e a configuração do Scada-LTS | `git pull && ./iniciar.sh` |
@@ -94,14 +126,16 @@ O token só é lido na primeira ativação; depois a vpn-local guarda a credenci
 ## Conteúdo
 
 ```
+trocar-scada.sh          # para quem já tem Scada-LTS: para o dele e instala o do laboratório (voltar-ao-scada-anterior.sh desfaz)
+so-vpn-local.sh          # para quem já tem Docker e Scada-LTS: sobe só o vpn-local ligado ao seu Scada-LTS
 instalar.sh              # instala o Docker (se faltar) e chama o iniciar.sh
 iniciar.sh               # pergunta o token, grava o .env e sobe tudo
 docker-compose.yml       # rede, mysql, vpn-local, scadalts
 .env.example             # modelo de configuração (copie para .env)
-vpn-local/               # Dockerfile e vpn-local-service.cjs (a vpn-local como serviço, gerado)
+vpn-local/               # Dockerfile e vpn-local-service.cjs (o vpn-local como serviço, gerado)
 scada-lts/               # importar.py (aplica a configuração sozinho) e scada-lts-import.json: 4 Data Sources, 25 pontos, 14 point links e a tela gráfica "Painel de comando" (botões e LEDs clicáveis)
 ```
 
 ## Segurança
 
-O `.env` e a credencial da vpn-local (guardada em texto no volume Docker) são pessoais: não compartilhe nem faça commit do `.env` (já está no `.gitignore`). O banco usa `root`/`root` e só é acessível dentro do Docker.
+O `.env` e a credencial do vpn-local (guardada em texto no volume Docker) são pessoais: não compartilhe nem faça commit do `.env` (já está no `.gitignore`). O banco usa `root`/`root` e só é acessível dentro do Docker.

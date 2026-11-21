@@ -1,8 +1,8 @@
 # Laboratório Virtual: Scada-LTS + vpn-local (gateway Modbus) juntos, no mesmo Docker.
 #
-# A vpn-local e o Scada-LTS compartilham a MESMA rede, cujo dono é o contêiner mínimo "rede". Assim os dispositivos Modbus
-# da vpn-local (127.0.0.11 a 127.0.0.14, porta 5020) ficam no "localhost" do Scada-LTS, exatamente como no Windows, e não
-# é preciso encaminhar portas. Como a rede é do contêiner "rede" (que nunca reinicia), dá para reiniciar a vpn-local ou o
+# O vpn-local e o Scada-LTS compartilham a MESMA rede, cujo dono é o contêiner mínimo "rede". Assim os dispositivos Modbus
+# do vpn-local (127.0.0.11 a 127.0.0.14, porta 5020) ficam no "localhost" do Scada-LTS, exatamente como no Windows, e não
+# é preciso encaminhar portas. Como a rede é do contêiner "rede" (que nunca reinicia), dá para reiniciar o vpn-local ou o
 # Scada-LTS separadamente sem perder a conexão entre eles.
 #
 #   1) copie .env.example para .env e preencha SERVIDOR e CHAVE (chave de ativação de "Meu laboratório");

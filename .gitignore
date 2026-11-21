@@ -2,3 +2,4 @@
 *.log
 .scada-config-aplicada
 docs/
+voltar-ao-scada-anterior.sh

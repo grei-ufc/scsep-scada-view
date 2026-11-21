@@ -16,7 +16,7 @@ sed -i 's/\r$//' .env   # tira o fim de linha do Windows, se o arquivo foi edita
 valor() { grep -E "^$1=" .env | head -1 | cut -d= -f2- || true; }
 grava() { if grep -qE "^$1=" .env; then sed -i "s|^$1=.*|$1=$2|" .env; else echo "$1=$2" >> .env; fi; }
 
-# A vpn-local guarda a credencial num volume; se ele existe, o token não é mais necessário.
+# O vpn-local guarda a credencial num volume; se ele existe, o token não é mais necessário.
 ja_ativada=0
 docker volume inspect scada-lab_vpn-local_data >/dev/null 2>&1 && ja_ativada=1
 
@@ -32,10 +32,10 @@ fi
 echo "Subindo os contêineres (na primeira vez baixa as imagens; pode levar alguns minutos)..."
 $DC up -d --build
 
-echo "Aguardando a vpn-local falar com o servidor..."
+echo "Aguardando o vpn-local falar com o servidor..."
 for _ in $(seq 1 30); do
   log="$(docker logs vpn-local 2>&1 | tail -20)"
-  if echo "$log" | grep -q "ativada com sucesso\|credencial salva"; then echo "OK: vpn-local ativada e conectada."; break; fi
+  if echo "$log" | grep -q "ativada com sucesso\|credencial salva"; then echo "OK: vpn-local ativado e conectado."; break; fi
   if echo "$log" | grep -q "ERRO na ativa"; then echo "$log" | grep "ERRO na ativa" | tail -1; echo "Confira o token (site > Meu laboratório) e rode ./iniciar.sh de novo."; exit 1; fi
   sleep 2
 done
