@@ -45,8 +45,10 @@ eh_kali && echo "(Kali Linux detectado: usando os pacotes do Debian/Kali)"
 echo "Se o sistema pedir a sua senha, digite-a (ela não aparece na tela) e aperte Enter."
 
 # 0) Pacote: se este script não está dentro da pasta do pacote, baixa o pacote primeiro e continua de lá
+# Uma pasta só é "o pacote" se tiver os arquivos dele (não basta ter um docker-compose.yml de outro projeto)
+eh_pacote() { [ -f "$1/docker-compose.yml" ] && [ -f "$1/iniciar.sh" ] && [ -d "$1/vpn-local" ]; }
 AQUI="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" 2>/dev/null && pwd || true)"
-if [ -z "$AQUI" ] || [ ! -f "$AQUI/docker-compose.yml" ]; then
+if [ -z "$AQUI" ] || ! eh_pacote "$AQUI"; then
   echo "Baixando o pacote do laboratório para $DESTINO ..."
   command -v git >/dev/null 2>&1 || apt_instalar git
   if [ -d "$DESTINO/.git" ]; then
