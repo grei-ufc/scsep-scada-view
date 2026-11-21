@@ -1,16 +1,16 @@
-# Laboratório Virtual: Scada-LTS + Ponte (gateway Modbus) juntos, no mesmo Docker.
+# Laboratório Virtual: Scada-LTS + vpn-local (gateway Modbus) juntos, no mesmo Docker.
 #
-# A Ponte e o Scada-LTS compartilham a MESMA rede, cujo dono é o contêiner mínimo "rede". Assim os dispositivos Modbus
-# da Ponte (127.0.0.11 a 127.0.0.14, porta 5020) ficam no "localhost" do Scada-LTS, exatamente como no Windows, e não
-# é preciso encaminhar portas. Como a rede é do contêiner "rede" (que nunca reinicia), dá para reiniciar a Ponte ou o
+# A vpn-local e o Scada-LTS compartilham a MESMA rede, cujo dono é o contêiner mínimo "rede". Assim os dispositivos Modbus
+# da vpn-local (127.0.0.11 a 127.0.0.14, porta 5020) ficam no "localhost" do Scada-LTS, exatamente como no Windows, e não
+# é preciso encaminhar portas. Como a rede é do contêiner "rede" (que nunca reinicia), dá para reiniciar a vpn-local ou o
 # Scada-LTS separadamente sem perder a conexão entre eles.
 #
 #   1) copie .env.example para .env e preencha SERVIDOR e CHAVE (chave de ativação de "Meu laboratório");
 #   2) docker compose up -d --build
 #   3) abra http://localhost:8080/Scada-LTS/ (ou a SCADA_PORT do .env) e importe docker/scada-lts/scada-lts-import.json
-#      (Administração > Importar/Exportar). Veja docs/07-docker-scada-ponte.md.
+#      (Administração > Importar/Exportar). Veja docs/02-primeiros-passos-no-scada-lts.pdf.
 #
-# Depois da primeira ativação a credencial fica no volume "ponte_data": nas próximas vezes a CHAVE não é mais necessária.
+# Depois da primeira ativação a credencial fica no volume "vpn-local_data": nas próximas vezes a CHAVE não é mais necessária.
 name: scada-lab
 
 services:
@@ -35,10 +35,10 @@ services:
       - db_data:/var/lib/mysql
     command: --log_bin_trust_function_creators=1
 
-  ponte:
-    container_name: ponte
-    build: ./ponte
-    image: lab/ponte:latest
+  vpn-local:
+    container_name: vpn-local
+    build: ./vpn-local
+    image: lab/vpn-local:latest
     restart: unless-stopped
     network_mode: service:rede
     environment:
@@ -46,7 +46,7 @@ services:
       - CHAVE=${CHAVE:-}
       - NOME=${NOME:-Scada-LTS (Docker)}
     volumes:
-      - ponte_data:/data
+      - vpn-local_data:/data
     depends_on:
       - rede
     healthcheck:
@@ -67,7 +67,7 @@ services:
         condition: service_started
       database:
         condition: service_healthy
-      ponte:
+      vpn-local:
         condition: service_healthy
     volumes:
       - tomcat_log:/usr/local/tomcat/logs
@@ -83,5 +83,5 @@ services:
 
 volumes:
   db_data:
-  ponte_data:
+  vpn-local_data:
   tomcat_log:
