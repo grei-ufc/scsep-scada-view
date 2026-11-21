@@ -93,6 +93,18 @@ sudo apt update && sudo apt install -y curl && curl -fsSL https://raw.githubuser
 
 Se o primeiro `sudo apt update` já falhar por causa das chaves, rode antes: `sudo curl -fsSL -o /usr/share/keyrings/kali-archive-keyring.gpg https://archive.kali.org/archive-keyring.gpg`. O resto é igual ao Ubuntu (também para quem já tem um Scada-LTS).
 
+## Fedora: limpar o Docker e instalar o laboratório
+
+> **ATENÇÃO: este comando APAGA.** Ele **para e exclui TODOS os containers** (rodando e parados) **e TODAS as imagens** do Docker deste computador, e só continua depois que você **digitar `APAGAR TUDO`**. Antes, ele lista o que vai remover. **Volumes** (dados de bancos) e redes **não** são apagados (a não ser que você use `LAB_APAGAR_VOLUMES=1`). Isso não pode ser desfeito.
+
+Instala o Docker e o Compose pelo próprio Fedora (`moby-engine` e `docker-compose`; se não der, usa o repositório oficial do Docker), limpa o Docker e sobe o Scada-LTS e o vpn-local, pedindo o token:
+
+```bash
+sudo dnf install -y curl git && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/instalar-fedora.sh | bash
+```
+
+Para deixar o token para depois (e adicionar com `./adicionar-token.sh`), coloque `LAB_SEM_TOKEN=1` antes do `bash`: `... | LAB_SEM_TOKEN=1 bash`. Se você **não quer apagar nada**, use os outros comandos (eles só param o Scada-LTS, depois de perguntar).
+
 ## Instalar agora e colocar o token depois (Debian/Ubuntu)
 
 Este comando **identifica a distribuição** (Debian, Ubuntu ou derivados, como o Kali), **para o Scada-LTS que você já tem** (os containers de Scada-LTS; nada é apagado e ele **pergunta antes**), instala o laboratório e deixa pronto, **já com as conexões Modbus** (Data Sources, pontos, controles e a tela Painel de comando). O **token fica para depois**:
@@ -162,6 +174,7 @@ Troque `PORTA` pela porta do seu Scada-LTS. Se a senha do admin não for `admin`
 
 ```
 trocar-scada.sh          # atalho antigo: chama o instalar.sh
+instalar-fedora.sh       # Fedora: APAGA todos os containers e imagens do Docker (com confirmação digitada) e instala o laboratório
 instalar-sem-token.sh    # Debian/Ubuntu: para o Scada-LTS existente, instala o nosso com as conexões; token depois
 adicionar-token.sh       # adiciona (ou troca) o token do vpn-local depois da instalação
 instalar-no-meu-scada.sh # para quem já tem Scada-LTS e quer MANTER o dele: instala o vpn-local e aplica a configuração

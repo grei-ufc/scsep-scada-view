@@ -94,7 +94,7 @@ fi
 echo
 echo "Agora posso aplicar no SEU Scada-LTS a configuração do laboratório: 4 Data Sources, 25 pontos, 14 links"
 echo "(controles liga/desliga) e a tela gráfica \"Painel de comando\". O que você já tem lá NÃO é apagado nem alterado."
-if [ -n "${LAB_CONFIRMA:-}" ]; then resp="$LAB_CONFIRMA"; elif [ -r /dev/tty ]; then read -rp "Aplicar agora? [S/n] " resp < /dev/tty; else resp="n"; fi
+if [ -n "${LAB_CONFIRMA:-}" ]; then resp="$LAB_CONFIRMA"; elif [ -r /dev/tty ]; then read -rp "Aplicar agora? [S/n] " resp < /dev/tty || resp="n"; else resp="n"; fi
 if [[ "$resp" =~ ^[nN]$ ]]; then
   echo "Ok, não apliquei. Para aplicar depois: LAB_SO_CONFIG=1 ./so-vpn-local.sh $ALVO"
 else

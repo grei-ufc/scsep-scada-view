@@ -141,7 +141,7 @@ if [ "${#lista[@]}" -gt 0 ]; then
   echo "Achei um Scada-LTS (ou containers com os mesmos nomes do laboratório / usando a porta $PORTA):"
   for n in "${lista[@]}"; do $DK ps -a --filter "name=^/$n\$" --format '  {{.Names}}  ({{.Image}}, {{.Status}})'; done
   echo "Vou PARAR esses containers (nada será apagado) e, quando o nome for igual ao do laboratório, renomear com o sufixo -anterior."
-  if [ -n "${LAB_CONFIRMA:-}" ]; then resp="$LAB_CONFIRMA"; elif [ -r /dev/tty ]; then read -rp "Continuar? [s/N] " resp < /dev/tty; else resp="n"; fi
+  if [ -n "${LAB_CONFIRMA:-}" ]; then resp="$LAB_CONFIRMA"; elif [ -r /dev/tty ]; then read -rp "Continuar? [s/N] " resp < /dev/tty || resp="n"; else resp="n"; fi
   [[ "$resp" =~ ^[sS]$ ]] || { echo "Cancelado. Nada foi alterado."; exit 1; }
 
   carimbo="$(date +%Y%m%d%H%M)"
