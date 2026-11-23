@@ -29,7 +29,7 @@
     },
     {
       "xid": "FONTE_GERACAO",
-      "name": "Geração (Chaves 2 e 3, tensão e potência)",
+      "name": "Geração (Chaves 2 e 3 e medições)",
       "enabled": true,
       "type": "MODBUS_IP",
       "alarmLevels": {
