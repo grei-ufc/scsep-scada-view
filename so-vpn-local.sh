@@ -92,7 +92,7 @@ fi
 # Etapa 2: configuração do Scada-LTS (Data Sources, pontos, controles e tela). Só ADICIONA; nada é apagado.
 # ---------------------------------------------------------------------------------------------------------------
 echo
-echo "Agora posso aplicar no SEU Scada-LTS a configuração do laboratório: 4 Data Sources, 25 pontos, 14 links"
+echo "Agora posso aplicar no SEU Scada-LTS a configuração do laboratório: 4 Data Sources, 34 pontos, 18 links"
 echo "(controles liga/desliga) e a tela gráfica \"Painel de comando\". O que você já tem lá NÃO é apagado nem alterado."
 if [ -n "${LAB_CONFIRMA:-}" ]; then resp="$LAB_CONFIRMA"; elif [ -r /dev/tty ]; then read -rp "Aplicar agora? [S/n] " resp < /dev/tty || resp="n"; else resp="n"; fi
 if [[ "$resp" =~ ^[nN]$ ]]; then

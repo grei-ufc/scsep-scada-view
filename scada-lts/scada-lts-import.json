@@ -644,6 +644,199 @@
         "oneColour": "#2e9e44"
       },
       "eventDetectors": []
+    },
+    {
+      "xid": "DS_CLP_DO_PAINEL_E_MOTOR_19",
+      "name": "Motor - Ligado (1=ligado) [HR 19 · running]",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
+      "pointLocator": {
+        "range": "HOLDING_REGISTER",
+        "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
+        "additive": 0,
+        "multiplier": 1,
+        "bit": 0,
+        "registerCount": 0,
+        "charset": "ASCII",
+        "offset": 19,
+        "slaveId": 1,
+        "slaveMonitor": false,
+        "settable": false
+      },
+      "eventDetectors": []
+    },
+    {
+      "xid": "DS_CLP_DO_PAINEL_E_MOTOR_20",
+      "name": "Motor - Sentido (0=horário, 1=anti-horário) [HR 20 · direction]",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
+      "pointLocator": {
+        "range": "HOLDING_REGISTER",
+        "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
+        "additive": 0,
+        "multiplier": 1,
+        "bit": 0,
+        "registerCount": 0,
+        "charset": "ASCII",
+        "offset": 20,
+        "slaveId": 1,
+        "slaveMonitor": false,
+        "settable": false
+      },
+      "eventDetectors": []
+    },
+    {
+      "xid": "DS_CLP_DO_PAINEL_E_MOTOR_21",
+      "name": "Motor - Velocidade desejada (rpm) [HR 21 · speed_setpoint_rpm]",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
+      "pointLocator": {
+        "range": "HOLDING_REGISTER",
+        "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
+        "additive": 0,
+        "multiplier": 1,
+        "bit": 0,
+        "registerCount": 0,
+        "charset": "ASCII",
+        "offset": 21,
+        "slaveId": 1,
+        "slaveMonitor": false,
+        "settable": false
+      },
+      "eventDetectors": []
+    },
+    {
+      "xid": "DS_CLP_DO_PAINEL_E_MOTOR_22",
+      "name": "Motor - Velocidade real (rpm) [HR 22 · speed_rpm]",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
+      "pointLocator": {
+        "range": "HOLDING_REGISTER",
+        "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
+        "additive": 0,
+        "multiplier": 1,
+        "bit": 0,
+        "registerCount": 0,
+        "charset": "ASCII",
+        "offset": 22,
+        "slaveId": 1,
+        "slaveMonitor": false,
+        "settable": false
+      },
+      "eventDetectors": []
+    },
+    {
+      "xid": "DS_CLP_DO_PAINEL_E_MOTOR_107",
+      "name": "Motor - Comando (1=ligar, 2=desligar, 3=ajustar velocidade, 4=horário, 5=anti-horário) [HR 107 · start/stop/set_speed/cw/ccw]",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
+      "pointLocator": {
+        "range": "HOLDING_REGISTER",
+        "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
+        "additive": 0,
+        "multiplier": 1,
+        "bit": 0,
+        "registerCount": 0,
+        "charset": "ASCII",
+        "offset": 107,
+        "slaveId": 1,
+        "slaveMonitor": false,
+        "settable": true
+      },
+      "eventDetectors": []
+    },
+    {
+      "xid": "DS_CLP_DO_PAINEL_E_MOTOR_108",
+      "name": "Motor - Velocidade desejada p/ comando 3 (1 a 1800 rpm; escreva ANTES de 107=3) [HR 108 · argumento]",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
+      "pointLocator": {
+        "range": "HOLDING_REGISTER",
+        "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
+        "additive": 0,
+        "multiplier": 1,
+        "bit": 0,
+        "registerCount": 0,
+        "charset": "ASCII",
+        "offset": 108,
+        "slaveId": 1,
+        "slaveMonitor": false,
+        "settable": true
+      },
+      "eventDetectors": []
+    },
+    {
+      "xid": "DS_CLP_DO_PAINEL_E_MOTOR_116",
+      "name": "Motor - Resultado do último comando [HR 116 · status]",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
+      "pointLocator": {
+        "range": "HOLDING_REGISTER",
+        "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
+        "additive": 0,
+        "multiplier": 1,
+        "bit": 0,
+        "registerCount": 0,
+        "charset": "ASCII",
+        "offset": 116,
+        "slaveId": 1,
+        "slaveMonitor": false,
+        "settable": false
+      },
+      "eventDetectors": []
+    },
+    {
+      "xid": "DP_CTRL_MOTOR",
+      "name": "Controle - Motor: ligar/desligar [envia HR 107, lê HR 19]",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "dataSourceXid": "DS_CONTROLES",
+      "pointLocator": {
+        "dataType": "BINARY",
+        "changeType": {
+          "type": "NO_CHANGE",
+          "startValue": "false"
+        },
+        "settable": true
+      },
+      "textRenderer": {
+        "type": "BINARY",
+        "zeroLabel": "Parado",
+        "zeroColour": "#888888",
+        "oneLabel": "Ligado",
+        "oneColour": "#2e9e44"
+      },
+      "eventDetectors": []
+    },
+    {
+      "xid": "DP_CTRL_MOTOR_SENTIDO",
+      "name": "Controle - Motor: sentido de giro (só com o motor parado) [envia HR 107, lê HR 20]",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "dataSourceXid": "DS_CONTROLES",
+      "pointLocator": {
+        "dataType": "BINARY",
+        "changeType": {
+          "type": "NO_CHANGE",
+          "startValue": "false"
+        },
+        "settable": true
+      },
+      "textRenderer": {
+        "type": "BINARY",
+        "zeroLabel": "Horário",
+        "zeroColour": "#2e9e44",
+        "oneLabel": "Anti-horário",
+        "oneColour": "#e08a00"
+      },
+      "eventDetectors": []
     }
   ],
   "pointLinks": [
@@ -755,6 +948,38 @@
       "xid": "PL_ESTADO_DJ_INVERSOR",
       "sourcePointId": "DP_CLP_DE_GERACAO_1",
       "targetPointId": "DP_CTRL_DJ_INVERSOR",
+      "script": "return source.value == 1;",
+      "event": "CHANGE",
+      "disabled": false
+    },
+    {
+      "xid": "PL_CTRL_MOTOR",
+      "sourcePointId": "DP_CTRL_MOTOR",
+      "targetPointId": "DS_CLP_DO_PAINEL_E_MOTOR_107",
+      "script": "return source.value ? 1 : 2;",
+      "event": "CHANGE",
+      "disabled": false
+    },
+    {
+      "xid": "PL_ESTADO_MOTOR",
+      "sourcePointId": "DS_CLP_DO_PAINEL_E_MOTOR_19",
+      "targetPointId": "DP_CTRL_MOTOR",
+      "script": "return source.value == 1;",
+      "event": "CHANGE",
+      "disabled": false
+    },
+    {
+      "xid": "PL_CTRL_MOTOR_SENTIDO",
+      "sourcePointId": "DP_CTRL_MOTOR_SENTIDO",
+      "targetPointId": "DS_CLP_DO_PAINEL_E_MOTOR_107",
+      "script": "return source.value ? 5 : 4;",
+      "event": "CHANGE",
+      "disabled": false
+    },
+    {
+      "xid": "PL_ESTADO_MOTOR_SENTIDO",
+      "sourcePointId": "DS_CLP_DO_PAINEL_E_MOTOR_20",
+      "targetPointId": "DP_CTRL_MOTOR_SENTIDO",
       "script": "return source.value == 1;",
       "event": "CHANGE",
       "disabled": false

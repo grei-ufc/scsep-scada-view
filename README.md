@@ -94,7 +94,7 @@ O token só é lido na primeira ativação; depois o vpn-local guarda a credenci
 
 ## Já tenho Scada-LTS e quero MANTER o meu
 
-Se você já tem um Scada-LTS rodando e **não quer pará-lo**, use este comando: ele instala só o **vpn-local**, liga-o ao **seu** Scada-LTS e **aplica nele a configuração do laboratório** (4 Data Sources, 25 pontos, os controles liga/desliga e a tela **Painel de comando**). Nada que você já tem é parado, apagado ou alterado: a configuração só é **adicionada** (ele pergunta antes). Serve no Ubuntu e no Kali:
+Se você já tem um Scada-LTS rodando e **não quer pará-lo**, use este comando: ele instala só o **vpn-local**, liga-o ao **seu** Scada-LTS e **aplica nele a configuração do laboratório** (4 Data Sources, 34 pontos, os controles liga/desliga e a tela **Painel de comando**). Nada que você já tem é parado, apagado ou alterado: a configuração só é **adicionada** (ele pergunta antes). Serve no Ubuntu e no Kali:
 
 ```bash
 sudo apt update && sudo apt install -y curl && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/instalar-no-meu-scada.sh | bash
@@ -157,7 +157,7 @@ so-vpn-local.sh          # o mesmo, com mais opções (nome do container, --host
 docker-compose.yml       # rede, mysql, vpn-local, scadalts
 .env.example             # modelo de configuração (copie para .env)
 vpn-local/               # Dockerfile e vpn-local-service.cjs (o vpn-local como serviço, gerado)
-scada-lts/               # importar.py (aplica a configuração sozinho) e scada-lts-import.json: 4 Data Sources, 25 pontos, 14 point links e a tela gráfica "Painel de comando"
+scada-lts/               # importar.py (aplica a configuração sozinho) e scada-lts-import.json: 4 Data Sources, 34 pontos, 18 point links e a tela gráfica "Painel de comando"
 # Instaladores antigos (ainda funcionam): instalar.sh, instalar-kali.sh, instalar-fedora.sh, instalar-sem-token.sh, trocar-scada.sh
 ```
 
