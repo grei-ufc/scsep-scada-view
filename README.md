@@ -20,16 +20,16 @@ Abra o terminal do seu Linux (no Windows: o **Ubuntu do WSL**) e cole **a linha 
 
 ```bash
 # Ubuntu (e o Ubuntu do WSL)
-sudo apt update && sudo apt install -y curl git && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/instalar-lab-ubuntu.sh | bash
+sudo apt update && sudo apt install -y curl git && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/install-lab-ubuntu.sh | bash
 
 # Debian
-sudo apt update && sudo apt install -y curl git && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/instalar-lab-debian.sh | bash
+sudo apt update && sudo apt install -y curl git && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/install-lab-debian.sh | bash
 
 # Kali Linux
-sudo apt update && sudo apt install -y curl git && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/instalar-lab-kali.sh | bash
+sudo apt update && sudo apt install -y curl git && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/install-lab-kali.sh | bash
 
 # Fedora
-sudo dnf install -y curl git && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/instalar-lab-fedora.sh | bash
+sudo dnf install -y curl git && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/install-lab-fedora.sh | bash
 ```
 
 Se o instalador não for o do seu sistema, ele avisa e mostra a linha certa. No **Debian** sem `sudo` ("sudo: command not found"): rode `su -`, depois `apt update && apt install -y curl git sudo` e cole a linha de novo.
@@ -70,10 +70,10 @@ Tudo o que aparece na tela fica gravado em `instalacao-DATA.log`, na pasta `~/sc
 
 ```bash
 cd ~ && git clone https://github.com/grei-ufc/scsep-scada-view.git && cd scsep-scada-view
-./instalar-lab-ubuntu.sh        # ou -debian, -kali, -fedora
+./install-lab-ubuntu.sh        # ou -debian, -kali, -fedora
 ```
 
-Pelo navegador: **Code > Download ZIP**, extraia e copie a pasta para o Linux (`cp -r /mnt/c/Users/SEU_USUARIO/Downloads/scsep-scada-view-main ~/scsep-scada-view`). Se aparecer "Permission denied" ao rodar um `.sh`, use `bash instalar-lab-ubuntu.sh`.
+Pelo navegador: **Code > Download ZIP**, extraia e copie a pasta para o Linux (`cp -r /mnt/c/Users/SEU_USUARIO/Downloads/scsep-scada-view-main ~/scsep-scada-view`). Se aparecer "Permission denied" ao rodar um `.sh`, use `bash install-lab-ubuntu.sh`.
 
 Pré-requisito no Windows: **WSL com Ubuntu** (PowerShell como administrador: `wsl --install -d Ubuntu`, reinicie e crie usuário e senha). O Docker **não** precisa estar instalado.
 
@@ -144,10 +144,10 @@ Troque `PORTA` pela porta do seu Scada-LTS. Se a senha do admin não for `admin`
 ## Conteúdo
 
 ```
-instalar-lab-ubuntu.sh   # instalador Ubuntu (e Ubuntu do WSL)
-instalar-lab-debian.sh   # instalador Debian
-instalar-lab-kali.sh     # instalador Kali Linux
-instalar-lab-fedora.sh   # instalador Fedora
+install-lab-ubuntu.sh   # instalador Ubuntu (e Ubuntu do WSL)
+install-lab-debian.sh   # instalador Debian
+install-lab-kali.sh     # instalador Kali Linux
+install-lab-fedora.sh   # instalador Fedora
 lib/lab-comum.sh         # os passos e as mensagens, comuns aos quatro instaladores
 iniciar.sh               # pergunta o token, grava o .env e sobe tudo
 adicionar-token.sh       # adiciona (ou troca) o token do vpn-local depois da instalação

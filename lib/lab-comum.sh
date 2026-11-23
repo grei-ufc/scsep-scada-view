@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ======================================================================================================================
 #  Laboratório Virtual de Subestações: parte COMUM dos instaladores (Ubuntu, Debian, Kali e Fedora).
-#  Este arquivo não é para ser rodado sozinho: ele é carregado por instalar-lab-ubuntu.sh (e os irmãos).
+#  Este arquivo não é para ser rodado sozinho: ele é carregado por install-lab-ubuntu.sh (e os irmãos).
 #
 #  O que o instalador faz, em 6 passos:
 #    1. Confere o computador (sistema, internet, espaço em disco, memória, permissões).
@@ -377,7 +377,7 @@ lab_passo4_preparar() {
       if ! lab_porta_ocupada "$p"; then escolhida="$p"; break; fi
     done
   fi
-  [ -n "$escolhida" ] || lab_fatal "todas as portas (${PORTAS}) estão ocupadas." "Feche programas que usam essas portas ou defina outra:  LAB_PORTAS=\"9000 9001\" ./instalar-lab-$LAB_DISTRO.sh"
+  [ -n "$escolhida" ] || lab_fatal "todas as portas (${PORTAS}) estão ocupadas." "Feche programas que usam essas portas ou defina outra:  LAB_PORTAS=\"9000 9001\" ./install-lab-$LAB_DISTRO.sh"
   if grep -qE '^SCADA_PORT=' .env; then sed -i "s|^SCADA_PORT=.*|SCADA_PORT=$escolhida|" .env; else echo "SCADA_PORT=$escolhida" >> .env; fi
   if [ "$escolhida" = 8080 ]; then ok "Porta do Scada-LTS: 8080."
   else aviso "a porta 8080 está ocupada por outro programa; o laboratório vai usar a $escolhida."; fi
@@ -480,7 +480,7 @@ lab_passo6_resumo() {
 }
 
 # ----------------------------------------------------------------------------------------------------------------------
-# Fluxo principal (chamado pelos instalar-lab-*.sh)
+# Fluxo principal (chamado pelos install-lab-*.sh)
 # ----------------------------------------------------------------------------------------------------------------------
 lab_principal() {
   set -Eeuo pipefail

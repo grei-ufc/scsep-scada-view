@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ======================================================================================================================
-#  Laboratório Virtual de Subestações: instalador para Ubuntu (e derivados, como Linux Mint e o Ubuntu do WSL)
+#  Laboratório Virtual de Subestações: instalador para Kali Linux
 #
 #  Instala o Scada-LTS e o vpn-local (conexão com o laboratório). Em resumo:
 #    - se você já usa o Docker, PARA os containers que estiverem rodando (nada é apagado);
@@ -9,18 +9,18 @@
 #
 #  COMO USAR: copie a linha abaixo, cole no terminal e aperte Enter (o sistema pede a sua senha):
 #
-#    sudo apt update && sudo apt install -y curl git && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/instalar-lab-ubuntu.sh | bash
+#    sudo apt update && sudo apt install -y curl git && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/install-lab-kali.sh | bash
 #
 #  Para deixar o token para depois (você adiciona com ./adicionar-token.sh):
 #
-#    sudo apt update && sudo apt install -y curl git && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/instalar-lab-ubuntu.sh | LAB_SEM_TOKEN=1 bash
+#    sudo apt update && sudo apt install -y curl git && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/install-lab-kali.sh | LAB_SEM_TOKEN=1 bash
 #
-#  Com o pacote já baixado, dentro da pasta dele:  ./instalar-lab-ubuntu.sh
+#  Com o pacote já baixado, dentro da pasta dele:  ./install-lab-kali.sh
 # ======================================================================================================================
 set -euo pipefail
 
-LAB_DISTRO="ubuntu"
-LAB_ARQUIVO="instalar-lab-ubuntu.sh"
+LAB_DISTRO="kali"
+LAB_ARQUIVO="install-lab-kali.sh"
 LAB_REPO="https://github.com/grei-ufc/scsep-scada-view.git"
 LAB_DESTINO="${LAB_DESTINO:-$HOME/scsep-scada-view}"
 LAB_RAW="https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main"
@@ -43,13 +43,13 @@ FAMILIA="$(lab_familia)"
 if [ "$FAMILIA" != "$LAB_DISTRO" ]; then
   nome="$(grep -E '^PRETTY_NAME=' /etc/os-release 2>/dev/null | cut -d= -f2- | tr -d '"' || true)"
   echo
-  echo "ESTE INSTALADOR É PARA Ubuntu (e derivados, como Linux Mint e o Ubuntu do WSL), mas o seu sistema parece ser: ${nome:-desconhecido}."
+  echo "ESTE INSTALADOR É PARA Kali Linux, mas o seu sistema parece ser: ${nome:-desconhecido}."
   case "$FAMILIA" in
     ubuntu|debian|kali|fedora)
       echo "Use o instalador do seu sistema (copie e cole):"
       echo
-      if [ "$FAMILIA" = fedora ]; then echo "  sudo dnf install -y curl git && curl -fsSL $LAB_RAW/instalar-lab-$FAMILIA.sh | bash"
-      else echo "  sudo apt update && sudo apt install -y curl git && curl -fsSL $LAB_RAW/instalar-lab-$FAMILIA.sh | bash"; fi ;;
+      if [ "$FAMILIA" = fedora ]; then echo "  sudo dnf install -y curl git && curl -fsSL $LAB_RAW/install-lab-$FAMILIA.sh | bash"
+      else echo "  sudo apt update && sudo apt install -y curl git && curl -fsSL $LAB_RAW/install-lab-$FAMILIA.sh | bash"; fi ;;
     *) echo "Este laboratório tem instalador para Ubuntu, Debian, Kali Linux e Fedora." ;;
   esac
   echo
@@ -69,7 +69,10 @@ if [ -z "$AQUI" ] || ! lab_eh_pacote "$AQUI"; then
     $LAB_SU apt-get update -qq && $LAB_SU apt-get install -y git
   fi
   if [ -d "$LAB_DESTINO/.git" ]; then
-    git -C "$LAB_DESTINO" pull -q --ff-only || echo "(não consegui atualizar o pacote; usando a versão que já está aí)"
+    # atualiza o pacote; se o histórico do GitHub foi reescrito, o pull simples falha: alinha com o GitHub (o .env é preservado)
+    git -C "$LAB_DESTINO" pull -q --ff-only 2>/dev/null \
+      || { git -C "$LAB_DESTINO" fetch -q origin && git -C "$LAB_DESTINO" reset -q --hard origin/main; } \
+      || echo "(não consegui atualizar o pacote; usando a versão que já está aí)"
   else
     if [ -e "$LAB_DESTINO" ]; then
       mv "$LAB_DESTINO" "$LAB_DESTINO.antigo-$(date +%Y%m%d%H%M%S)"
