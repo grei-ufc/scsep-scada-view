@@ -837,6 +837,27 @@
         "oneColour": "#e08a00"
       },
       "eventDetectors": []
+    },
+    {
+      "xid": "DP_CTRL_MOTOR_VELOCIDADE",
+      "name": "Controle - Motor: velocidade (rpm, 1 a 1800) [envia HR 108 e depois HR 107=3, lê HR 21]",
+      "enabled": true,
+      "loggingType": "ON_CHANGE",
+      "dataSourceXid": "DS_CONTROLES",
+      "pointLocator": {
+        "dataType": "NUMERIC",
+        "changeType": {
+          "type": "NO_CHANGE",
+          "startValue": "900"
+        },
+        "settable": true
+      },
+      "textRenderer": {
+        "type": "ANALOG",
+        "format": "0",
+        "suffix": " rpm"
+      },
+      "eventDetectors": []
     }
   ],
   "pointLinks": [
@@ -981,6 +1002,30 @@
       "sourcePointId": "DS_CLP_DO_PAINEL_E_MOTOR_20",
       "targetPointId": "DP_CTRL_MOTOR_SENTIDO",
       "script": "return source.value == 1;",
+      "event": "CHANGE",
+      "disabled": false
+    },
+    {
+      "xid": "PL_CTRL_MOTOR_VELOCIDADE",
+      "sourcePointId": "DP_CTRL_MOTOR_VELOCIDADE",
+      "targetPointId": "DS_CLP_DO_PAINEL_E_MOTOR_108",
+      "script": "return Math.min(1800, Math.max(1, Math.round(source.value)));",
+      "event": "CHANGE",
+      "disabled": false
+    },
+    {
+      "xid": "PL_CTRL_MOTOR_VELOCIDADE_APLICA",
+      "sourcePointId": "DS_CLP_DO_PAINEL_E_MOTOR_108",
+      "targetPointId": "DS_CLP_DO_PAINEL_E_MOTOR_107",
+      "script": "return source.value >= 1 ? 3 : 0;",
+      "event": "CHANGE",
+      "disabled": false
+    },
+    {
+      "xid": "PL_ESTADO_MOTOR_VELOCIDADE",
+      "sourcePointId": "DS_CLP_DO_PAINEL_E_MOTOR_21",
+      "targetPointId": "DP_CTRL_MOTOR_VELOCIDADE",
+      "script": "return source.value;",
       "event": "CHANGE",
       "disabled": false
     }

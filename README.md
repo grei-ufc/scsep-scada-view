@@ -155,7 +155,7 @@ Em seguida: se só existir o Compose antigo (`docker-compose` v1, em Python), ba
 2. Se o volume `scada-lab_vpn-local_data` ainda **não** existe e `CHAVE` está vazia, e não há `LAB_SEM_TOKEN=1`: mostra o quadro **TOKEN DE ACESSO** e pergunta. Aceita `ak_` seguido de letras, números, `_` ou `-` (espaços e aspas são removidos). Até **3 tentativas**; **só Enter** (ou 3 erros) deixa o token para depois.
 3. `docker compose up -d --build` (na primeira vez baixa as imagens: 5 a 20 minutos).
 4. Espera o vpn-local falar com o servidor (até 1 min) e o Scada-LTS responder (200 ou 302; até 5 min).
-5. Na primeira vez, roda `python3 scada-lts/importar.py`, que faz login como `admin/admin` e importa `scada-lts/scada-lts-import.json`: **4 Data Sources, 34 pontos, 18 point links e a tela "Painel de comando"**. Cria o arquivo `.scada-config-aplicada` para não repetir. Se o admin já trocou a senha: `SCADA_USER=... SCADA_SENHA=... python3 scada-lts/importar.py`.
+5. Na primeira vez, roda `python3 scada-lts/importar.py`, que faz login como `admin/admin` e importa `scada-lts/scada-lts-import.json`: **4 Data Sources, 35 pontos, 21 point links e a tela "Painel de comando"**. Cria o arquivo `.scada-config-aplicada` para não repetir. Se o admin já trocou a senha: `SCADA_USER=... SCADA_SENHA=... python3 scada-lts/importar.py`.
 
 **Passo 6: conferir e resumir.** Lista o estado dos 4 containers, testa a página do Scada-LTS e o vpn-local e mostra o quadro **PRONTO** (endereço, login, comandos do dia a dia, caminho do `voltar-containers.sh` e do log).
 
