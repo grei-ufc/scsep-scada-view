@@ -8,7 +8,7 @@ cd "$(dirname "$0")"
 
 if docker compose version >/dev/null 2>&1; then DC="docker compose"
 elif command -v docker-compose >/dev/null 2>&1; then DC="docker-compose"
-else echo "ERRO: Docker Compose não encontrado. Rode ./instalar.sh."; exit 1; fi
+else echo "ERRO: Docker Compose não encontrado. Rode o instalador do seu sistema (install-lab-ubuntu.sh, -debian, -kali ou -fedora)."; exit 1; fi
 docker info >/dev/null 2>&1 || { echo "ERRO: o Docker não está rodando ou você não tem acesso (feche e abra o Ubuntu; ou: sudo service docker start)."; exit 1; }
 
 [ -f .env ] || cp .env.example .env

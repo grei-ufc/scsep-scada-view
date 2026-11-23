@@ -7,7 +7,7 @@ cd "$(dirname "$0")"
 # Docker Desktop / Docker moderno: "docker compose". Docker antigo do apt: "docker-compose".
 if docker compose version >/dev/null 2>&1; then DC="docker compose"
 elif command -v docker-compose >/dev/null 2>&1; then DC="docker-compose"
-else echo "ERRO: Docker não encontrado. Rode ./instalar.sh para instalar o Docker."; exit 1; fi
+else echo "ERRO: Docker não encontrado. Rode o instalador do seu sistema (install-lab-ubuntu.sh, -debian, -kali ou -fedora)."; exit 1; fi
 docker info >/dev/null 2>&1 || { echo "ERRO: o Docker não está rodando (abra o Docker Desktop ou rode: sudo service docker start)."; exit 1; }
 
 [ -f .env ] || cp .env.example .env
