@@ -1,8 +1,8 @@
 {
   "dataSources": [
     {
-      "xid": "DS_IED_DE_PROTECAO",
-      "name": "IED de proteção (disjuntor geral)",
+      "xid": "FONTE_PROTECAO",
+      "name": "Proteção (Chave 1 geral)",
       "enabled": true,
       "type": "MODBUS_IP",
       "alarmLevels": {
@@ -28,8 +28,8 @@
       "encapsulated": false
     },
     {
-      "xid": "DS_CLP_DE_GERACAO",
-      "name": "CLP de geração (motor e inversor)",
+      "xid": "FONTE_GERACAO",
+      "name": "Geração (Chaves 2 e 3, tensão e potência)",
       "enabled": true,
       "type": "MODBUS_IP",
       "alarmLevels": {
@@ -55,8 +55,8 @@
       "encapsulated": false
     },
     {
-      "xid": "DS_CLP_DO_PAINEL_E_MOTOR",
-      "name": "CLP do painel e motor (LEDs)",
+      "xid": "FONTE_PAINEL_MOTOR",
+      "name": "Painel e motor (LEDs e motor)",
       "enabled": true,
       "type": "MODBUS_IP",
       "alarmLevels": {
@@ -82,8 +82,8 @@
       "encapsulated": false
     },
     {
-      "xid": "DS_CONTROLES",
-      "name": "Controles (liga/desliga)",
+      "xid": "FONTE_BOTOES",
+      "name": "Botões da tela (comandam o resto)",
       "enabled": true,
       "type": "VIRTUAL",
       "updatePeriodType": "MINUTES",
@@ -92,11 +92,11 @@
   ],
   "dataPoints": [
     {
-      "xid": "DP_IED_DE_PROTECAO_0",
-      "name": "Chave 1 - Disjuntor geral - Estado (1=fechado) [HR 0 · closed]",
+      "xid": "CHAVE1_ESTADO",
+      "name": "Chave 1 (geral) - Estado (1=fechada)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_IED_DE_PROTECAO",
+      "dataSourceXid": "FONTE_PROTECAO",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -113,11 +113,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_IED_DE_PROTECAO_5",
-      "name": "Medição - Corrente (A) [HR 5 · current_a]",
+      "xid": "CORRENTE",
+      "name": "Corrente (A)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_IED_DE_PROTECAO",
+      "dataSourceXid": "FONTE_PROTECAO",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -139,11 +139,11 @@
       }
     },
     {
-      "xid": "DP_IED_DE_PROTECAO_100",
-      "name": "Chave 1 - Disjuntor geral - Comando (1=fechar, 2=abrir) [HR 100 · close/open]",
+      "xid": "CHAVE1_COMANDO",
+      "name": "Chave 1 (geral) - Comando (1=fechar, 2=abrir)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_IED_DE_PROTECAO",
+      "dataSourceXid": "FONTE_PROTECAO",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -160,11 +160,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_IED_DE_PROTECAO_110",
-      "name": "Chave 1 - Disjuntor geral - Resultado do último comando [HR 110 · status]",
+      "xid": "CHAVE1_RESULTADO",
+      "name": "Chave 1 (geral) - Resultado do comando",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_IED_DE_PROTECAO",
+      "dataSourceXid": "FONTE_PROTECAO",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -181,11 +181,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CLP_DE_GERACAO_1",
-      "name": "Chave 3 - Disjuntor do inversor - Estado (1=fechado) [HR 1 · running]",
+      "xid": "CHAVE3_ESTADO",
+      "name": "Chave 3 (inversor) - Estado (1=fechada)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DE_GERACAO",
+      "dataSourceXid": "FONTE_GERACAO",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -202,11 +202,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CLP_DE_GERACAO_2",
-      "name": "Medição - Potência ativa (kW) [HR 2 · active_power_kw]",
+      "xid": "POTENCIA",
+      "name": "Potência ativa (kW)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DE_GERACAO",
+      "dataSourceXid": "FONTE_GERACAO",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -228,11 +228,11 @@
       }
     },
     {
-      "xid": "DP_CLP_DE_GERACAO_3",
-      "name": "Medição - Tensão CA (V) [HR 3 · ac_voltage_v]",
+      "xid": "TENSAO",
+      "name": "Tensão (V)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DE_GERACAO",
+      "dataSourceXid": "FONTE_GERACAO",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -254,11 +254,11 @@
       }
     },
     {
-      "xid": "DP_CLP_DE_GERACAO_9",
-      "name": "Chave 2 - Disjuntor do motor - Estado (1=fechado) [HR 9 · closed]",
+      "xid": "CHAVE2_ESTADO",
+      "name": "Chave 2 (motor) - Estado (1=fechada)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DE_GERACAO",
+      "dataSourceXid": "FONTE_GERACAO",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -275,11 +275,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CLP_DE_GERACAO_101",
-      "name": "Chave 3 - Disjuntor do inversor - Comando (1=fechar, 2=abrir) [HR 101 · start/stop]",
+      "xid": "CHAVE3_COMANDO",
+      "name": "Chave 3 (inversor) - Comando (1=fechar, 2=abrir)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DE_GERACAO",
+      "dataSourceXid": "FONTE_GERACAO",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -296,11 +296,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CLP_DE_GERACAO_104",
-      "name": "Chave 2 - Disjuntor do motor - Comando (1=fechar, 2=abrir) [HR 104 · close/open]",
+      "xid": "CHAVE2_COMANDO",
+      "name": "Chave 2 (motor) - Comando (1=fechar, 2=abrir)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DE_GERACAO",
+      "dataSourceXid": "FONTE_GERACAO",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -317,11 +317,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CLP_DE_GERACAO_111",
-      "name": "Chave 3 - Disjuntor do inversor - Resultado do último comando [HR 111 · status]",
+      "xid": "CHAVE3_RESULTADO",
+      "name": "Chave 3 (inversor) - Resultado do comando",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DE_GERACAO",
+      "dataSourceXid": "FONTE_GERACAO",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -338,11 +338,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CLP_DE_GERACAO_113",
-      "name": "Chave 2 - Disjuntor do motor - Resultado do último comando [HR 113 · status]",
+      "xid": "CHAVE2_RESULTADO",
+      "name": "Chave 2 (motor) - Resultado do comando",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DE_GERACAO",
+      "dataSourceXid": "FONTE_GERACAO",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -359,11 +359,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CLP_DO_PAINEL_E_MOTOR_15",
-      "name": "LED 1 (verde) - Estado (1=aceso) [HR 15 · led1]",
+      "xid": "LED1_ESTADO",
+      "name": "LED 1 (verde) - Estado (1=aceso)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
+      "dataSourceXid": "FONTE_PAINEL_MOTOR",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -380,11 +380,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CLP_DO_PAINEL_E_MOTOR_16",
-      "name": "LED 2 (amarelo) - Estado (1=aceso) [HR 16 · led2]",
+      "xid": "LED2_ESTADO",
+      "name": "LED 2 (amarelo) - Estado (1=aceso)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
+      "dataSourceXid": "FONTE_PAINEL_MOTOR",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -401,11 +401,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CLP_DO_PAINEL_E_MOTOR_17",
-      "name": "LED 3 (vermelho) - Estado (1=aceso) [HR 17 · led3]",
+      "xid": "LED3_ESTADO",
+      "name": "LED 3 (vermelho) - Estado (1=aceso)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
+      "dataSourceXid": "FONTE_PAINEL_MOTOR",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -422,11 +422,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CLP_DO_PAINEL_E_MOTOR_18",
-      "name": "LED 4 (azul) - Estado (1=aceso) [HR 18 · led4]",
+      "xid": "LED4_ESTADO",
+      "name": "LED 4 (azul) - Estado (1=aceso)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
+      "dataSourceXid": "FONTE_PAINEL_MOTOR",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -443,11 +443,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CLP_DO_PAINEL_E_MOTOR_106",
-      "name": "LEDs - Comando (1 a 4 acende, 11 a 14 apaga) [HR 106 · ledN_on/ledN_off]",
+      "xid": "LEDS_COMANDO",
+      "name": "LEDs - Comando (1 a 4 acende, 11 a 14 apaga)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
+      "dataSourceXid": "FONTE_PAINEL_MOTOR",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -464,11 +464,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CLP_DO_PAINEL_E_MOTOR_115",
-      "name": "LEDs - Resultado do último comando [HR 115 · status]",
+      "xid": "LEDS_RESULTADO",
+      "name": "LEDs - Resultado do comando",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
+      "dataSourceXid": "FONTE_PAINEL_MOTOR",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -485,11 +485,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CTRL_LED1",
-      "name": "Controle - LED 1 (verde): ligar/desligar [envia HR 106, lê HR 15]",
+      "xid": "BOTAO_LED1",
+      "name": "Botão - LED 1 (verde): ligar/desligar",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CONTROLES",
+      "dataSourceXid": "FONTE_BOTOES",
       "pointLocator": {
         "dataType": "BINARY",
         "changeType": {
@@ -508,11 +508,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CTRL_LED2",
-      "name": "Controle - LED 2 (amarelo): ligar/desligar [envia HR 106, lê HR 16]",
+      "xid": "BOTAO_LED2",
+      "name": "Botão - LED 2 (amarelo): ligar/desligar",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CONTROLES",
+      "dataSourceXid": "FONTE_BOTOES",
       "pointLocator": {
         "dataType": "BINARY",
         "changeType": {
@@ -531,11 +531,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CTRL_LED3",
-      "name": "Controle - LED 3 (vermelho): ligar/desligar [envia HR 106, lê HR 17]",
+      "xid": "BOTAO_LED3",
+      "name": "Botão - LED 3 (vermelho): ligar/desligar",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CONTROLES",
+      "dataSourceXid": "FONTE_BOTOES",
       "pointLocator": {
         "dataType": "BINARY",
         "changeType": {
@@ -554,11 +554,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CTRL_LED4",
-      "name": "Controle - LED 4 (azul): ligar/desligar [envia HR 106, lê HR 18]",
+      "xid": "BOTAO_LED4",
+      "name": "Botão - LED 4 (azul): ligar/desligar",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CONTROLES",
+      "dataSourceXid": "FONTE_BOTOES",
       "pointLocator": {
         "dataType": "BINARY",
         "changeType": {
@@ -577,11 +577,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CTRL_DJ_GERAL",
-      "name": "Controle - Chave 1 - Disjuntor geral (fechar/abrir) [envia HR 100, lê HR 0]",
+      "xid": "BOTAO_CHAVE1",
+      "name": "Botão - Chave 1 (geral): fechar/abrir",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CONTROLES",
+      "dataSourceXid": "FONTE_BOTOES",
       "pointLocator": {
         "dataType": "BINARY",
         "changeType": {
@@ -600,11 +600,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CTRL_DJ_MOTOR",
-      "name": "Controle - Chave 2 - Disjuntor do motor (fechar/abrir) [envia HR 104, lê HR 9]",
+      "xid": "BOTAO_CHAVE2",
+      "name": "Botão - Chave 2 (motor): fechar/abrir",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CONTROLES",
+      "dataSourceXid": "FONTE_BOTOES",
       "pointLocator": {
         "dataType": "BINARY",
         "changeType": {
@@ -623,11 +623,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CTRL_DJ_INVERSOR",
-      "name": "Controle - Chave 3 - Disjuntor do inversor (fechar/abrir) [envia HR 101, lê HR 1]",
+      "xid": "BOTAO_CHAVE3",
+      "name": "Botão - Chave 3 (inversor): fechar/abrir",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CONTROLES",
+      "dataSourceXid": "FONTE_BOTOES",
       "pointLocator": {
         "dataType": "BINARY",
         "changeType": {
@@ -646,11 +646,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DS_CLP_DO_PAINEL_E_MOTOR_19",
-      "name": "Motor - Ligado (1=ligado) [HR 19 · running]",
+      "xid": "MOTOR_LIGADO",
+      "name": "Motor - Ligado (1=ligado)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
+      "dataSourceXid": "FONTE_PAINEL_MOTOR",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -667,11 +667,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DS_CLP_DO_PAINEL_E_MOTOR_20",
-      "name": "Motor - Sentido (0=horário, 1=anti-horário) [HR 20 · direction]",
+      "xid": "MOTOR_SENTIDO",
+      "name": "Motor - Sentido (0=horário, 1=anti-horário)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
+      "dataSourceXid": "FONTE_PAINEL_MOTOR",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -688,11 +688,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DS_CLP_DO_PAINEL_E_MOTOR_21",
-      "name": "Motor - Velocidade desejada (rpm) [HR 21 · speed_setpoint_rpm]",
+      "xid": "MOTOR_VEL_DESEJADA",
+      "name": "Motor - Velocidade desejada (rpm)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
+      "dataSourceXid": "FONTE_PAINEL_MOTOR",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -709,11 +709,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DS_CLP_DO_PAINEL_E_MOTOR_22",
-      "name": "Motor - Velocidade real (rpm) [HR 22 · speed_rpm]",
+      "xid": "MOTOR_VEL_REAL",
+      "name": "Motor - Velocidade real (rpm)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
+      "dataSourceXid": "FONTE_PAINEL_MOTOR",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -730,11 +730,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DS_CLP_DO_PAINEL_E_MOTOR_107",
-      "name": "Motor - Comando (1=ligar, 2=desligar, 3=ajustar velocidade, 4=horário, 5=anti-horário) [HR 107 · start/stop/set_speed/cw/ccw]",
+      "xid": "MOTOR_COMANDO",
+      "name": "Motor - Comando (1=ligar, 2=desligar, 3=ajustar velocidade, 4=horário, 5=anti-horário)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
+      "dataSourceXid": "FONTE_PAINEL_MOTOR",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -751,11 +751,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DS_CLP_DO_PAINEL_E_MOTOR_108",
-      "name": "Motor - Velocidade desejada p/ comando 3 (1 a 1800 rpm; escreva ANTES de 107=3) [HR 108 · argumento]",
+      "xid": "MOTOR_VEL_ARGUMENTO",
+      "name": "Motor - Velocidade do comando 3 (1 a 1800 rpm; escreva ANTES do comando)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
+      "dataSourceXid": "FONTE_PAINEL_MOTOR",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -772,11 +772,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DS_CLP_DO_PAINEL_E_MOTOR_116",
-      "name": "Motor - Resultado do último comando [HR 116 · status]",
+      "xid": "MOTOR_RESULTADO",
+      "name": "Motor - Resultado do comando",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CLP_DO_PAINEL_E_MOTOR",
+      "dataSourceXid": "FONTE_PAINEL_MOTOR",
       "pointLocator": {
         "range": "HOLDING_REGISTER",
         "modbusDataType": "TWO_BYTE_INT_UNSIGNED",
@@ -793,11 +793,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CTRL_MOTOR",
-      "name": "Controle - Motor: ligar/desligar [envia HR 107, lê HR 19]",
+      "xid": "BOTAO_MOTOR",
+      "name": "Botão - Motor: ligar/desligar",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CONTROLES",
+      "dataSourceXid": "FONTE_BOTOES",
       "pointLocator": {
         "dataType": "BINARY",
         "changeType": {
@@ -816,11 +816,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CTRL_MOTOR_SENTIDO",
-      "name": "Controle - Motor: sentido de giro (só com o motor parado) [envia HR 107, lê HR 20]",
+      "xid": "BOTAO_MOTOR_SENTIDO",
+      "name": "Botão - Motor: sentido de giro (só com o motor parado)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CONTROLES",
+      "dataSourceXid": "FONTE_BOTOES",
       "pointLocator": {
         "dataType": "BINARY",
         "changeType": {
@@ -839,11 +839,11 @@
       "eventDetectors": []
     },
     {
-      "xid": "DP_CTRL_MOTOR_VELOCIDADE",
-      "name": "Controle - Motor: velocidade (rpm, 1 a 1800) [envia HR 108 e depois HR 107=3, lê HR 21]",
+      "xid": "BOTAO_MOTOR_VELOCIDADE",
+      "name": "Botão - Motor: velocidade (rpm, 1 a 1800)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
-      "dataSourceXid": "DS_CONTROLES",
+      "dataSourceXid": "FONTE_BOTOES",
       "pointLocator": {
         "dataType": "NUMERIC",
         "changeType": {
@@ -862,169 +862,169 @@
   ],
   "pointLinks": [
     {
-      "xid": "PL_CTRL_LED1",
-      "sourcePointId": "DP_CTRL_LED1",
-      "targetPointId": "DP_CLP_DO_PAINEL_E_MOTOR_106",
+      "xid": "LINK_BOTAO_LED1",
+      "sourcePointId": "BOTAO_LED1",
+      "targetPointId": "LEDS_COMANDO",
       "script": "return source.value ? 1 : 11;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_ESTADO_LED1",
-      "sourcePointId": "DP_CLP_DO_PAINEL_E_MOTOR_15",
-      "targetPointId": "DP_CTRL_LED1",
+      "xid": "LINK_ESTADO_LED1",
+      "sourcePointId": "LED1_ESTADO",
+      "targetPointId": "BOTAO_LED1",
       "script": "return source.value == 1;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_CTRL_LED2",
-      "sourcePointId": "DP_CTRL_LED2",
-      "targetPointId": "DP_CLP_DO_PAINEL_E_MOTOR_106",
+      "xid": "LINK_BOTAO_LED2",
+      "sourcePointId": "BOTAO_LED2",
+      "targetPointId": "LEDS_COMANDO",
       "script": "return source.value ? 2 : 12;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_ESTADO_LED2",
-      "sourcePointId": "DP_CLP_DO_PAINEL_E_MOTOR_16",
-      "targetPointId": "DP_CTRL_LED2",
+      "xid": "LINK_ESTADO_LED2",
+      "sourcePointId": "LED2_ESTADO",
+      "targetPointId": "BOTAO_LED2",
       "script": "return source.value == 1;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_CTRL_LED3",
-      "sourcePointId": "DP_CTRL_LED3",
-      "targetPointId": "DP_CLP_DO_PAINEL_E_MOTOR_106",
+      "xid": "LINK_BOTAO_LED3",
+      "sourcePointId": "BOTAO_LED3",
+      "targetPointId": "LEDS_COMANDO",
       "script": "return source.value ? 3 : 13;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_ESTADO_LED3",
-      "sourcePointId": "DP_CLP_DO_PAINEL_E_MOTOR_17",
-      "targetPointId": "DP_CTRL_LED3",
+      "xid": "LINK_ESTADO_LED3",
+      "sourcePointId": "LED3_ESTADO",
+      "targetPointId": "BOTAO_LED3",
       "script": "return source.value == 1;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_CTRL_LED4",
-      "sourcePointId": "DP_CTRL_LED4",
-      "targetPointId": "DP_CLP_DO_PAINEL_E_MOTOR_106",
+      "xid": "LINK_BOTAO_LED4",
+      "sourcePointId": "BOTAO_LED4",
+      "targetPointId": "LEDS_COMANDO",
       "script": "return source.value ? 4 : 14;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_ESTADO_LED4",
-      "sourcePointId": "DP_CLP_DO_PAINEL_E_MOTOR_18",
-      "targetPointId": "DP_CTRL_LED4",
+      "xid": "LINK_ESTADO_LED4",
+      "sourcePointId": "LED4_ESTADO",
+      "targetPointId": "BOTAO_LED4",
       "script": "return source.value == 1;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_CTRL_DJ_GERAL",
-      "sourcePointId": "DP_CTRL_DJ_GERAL",
-      "targetPointId": "DP_IED_DE_PROTECAO_100",
+      "xid": "LINK_BOTAO_CHAVE1",
+      "sourcePointId": "BOTAO_CHAVE1",
+      "targetPointId": "CHAVE1_COMANDO",
       "script": "return source.value ? 1 : 2;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_ESTADO_DJ_GERAL",
-      "sourcePointId": "DP_IED_DE_PROTECAO_0",
-      "targetPointId": "DP_CTRL_DJ_GERAL",
+      "xid": "LINK_ESTADO_CHAVE1",
+      "sourcePointId": "CHAVE1_ESTADO",
+      "targetPointId": "BOTAO_CHAVE1",
       "script": "return source.value == 1;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_CTRL_DJ_MOTOR",
-      "sourcePointId": "DP_CTRL_DJ_MOTOR",
-      "targetPointId": "DP_CLP_DE_GERACAO_104",
+      "xid": "LINK_BOTAO_CHAVE2",
+      "sourcePointId": "BOTAO_CHAVE2",
+      "targetPointId": "CHAVE2_COMANDO",
       "script": "return source.value ? 1 : 2;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_ESTADO_DJ_MOTOR",
-      "sourcePointId": "DP_CLP_DE_GERACAO_9",
-      "targetPointId": "DP_CTRL_DJ_MOTOR",
+      "xid": "LINK_ESTADO_CHAVE2",
+      "sourcePointId": "CHAVE2_ESTADO",
+      "targetPointId": "BOTAO_CHAVE2",
       "script": "return source.value == 1;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_CTRL_DJ_INVERSOR",
-      "sourcePointId": "DP_CTRL_DJ_INVERSOR",
-      "targetPointId": "DP_CLP_DE_GERACAO_101",
+      "xid": "LINK_BOTAO_CHAVE3",
+      "sourcePointId": "BOTAO_CHAVE3",
+      "targetPointId": "CHAVE3_COMANDO",
       "script": "return source.value ? 1 : 2;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_ESTADO_DJ_INVERSOR",
-      "sourcePointId": "DP_CLP_DE_GERACAO_1",
-      "targetPointId": "DP_CTRL_DJ_INVERSOR",
+      "xid": "LINK_ESTADO_CHAVE3",
+      "sourcePointId": "CHAVE3_ESTADO",
+      "targetPointId": "BOTAO_CHAVE3",
       "script": "return source.value == 1;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_CTRL_MOTOR",
-      "sourcePointId": "DP_CTRL_MOTOR",
-      "targetPointId": "DS_CLP_DO_PAINEL_E_MOTOR_107",
+      "xid": "LINK_BOTAO_MOTOR",
+      "sourcePointId": "BOTAO_MOTOR",
+      "targetPointId": "MOTOR_COMANDO",
       "script": "return source.value ? 1 : 2;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_ESTADO_MOTOR",
-      "sourcePointId": "DS_CLP_DO_PAINEL_E_MOTOR_19",
-      "targetPointId": "DP_CTRL_MOTOR",
+      "xid": "LINK_ESTADO_MOTOR",
+      "sourcePointId": "MOTOR_LIGADO",
+      "targetPointId": "BOTAO_MOTOR",
       "script": "return source.value == 1;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_CTRL_MOTOR_SENTIDO",
-      "sourcePointId": "DP_CTRL_MOTOR_SENTIDO",
-      "targetPointId": "DS_CLP_DO_PAINEL_E_MOTOR_107",
+      "xid": "LINK_BOTAO_MOTOR_SENTIDO",
+      "sourcePointId": "BOTAO_MOTOR_SENTIDO",
+      "targetPointId": "MOTOR_COMANDO",
       "script": "return source.value ? 5 : 4;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_ESTADO_MOTOR_SENTIDO",
-      "sourcePointId": "DS_CLP_DO_PAINEL_E_MOTOR_20",
-      "targetPointId": "DP_CTRL_MOTOR_SENTIDO",
+      "xid": "LINK_ESTADO_MOTOR_SENTIDO",
+      "sourcePointId": "MOTOR_SENTIDO",
+      "targetPointId": "BOTAO_MOTOR_SENTIDO",
       "script": "return source.value == 1;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_CTRL_MOTOR_VELOCIDADE",
-      "sourcePointId": "DP_CTRL_MOTOR_VELOCIDADE",
-      "targetPointId": "DS_CLP_DO_PAINEL_E_MOTOR_108",
+      "xid": "LINK_BOTAO_MOTOR_VELOCIDADE",
+      "sourcePointId": "BOTAO_MOTOR_VELOCIDADE",
+      "targetPointId": "MOTOR_VEL_ARGUMENTO",
       "script": "return Math.min(1800, Math.max(1, Math.round(source.value)));",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_CTRL_MOTOR_VELOCIDADE_APLICA",
-      "sourcePointId": "DS_CLP_DO_PAINEL_E_MOTOR_108",
-      "targetPointId": "DS_CLP_DO_PAINEL_E_MOTOR_107",
+      "xid": "LINK_BOTAO_MOTOR_VELOCIDADE_APLICA",
+      "sourcePointId": "MOTOR_VEL_ARGUMENTO",
+      "targetPointId": "MOTOR_COMANDO",
       "script": "return source.value >= 1 ? 3 : 0;",
       "event": "CHANGE",
       "disabled": false
     },
     {
-      "xid": "PL_ESTADO_MOTOR_VELOCIDADE",
-      "sourcePointId": "DS_CLP_DO_PAINEL_E_MOTOR_21",
-      "targetPointId": "DP_CTRL_MOTOR_VELOCIDADE",
+      "xid": "LINK_ESTADO_MOTOR_VELOCIDADE",
+      "sourcePointId": "MOTOR_VEL_DESEJADA",
+      "targetPointId": "BOTAO_MOTOR_VELOCIDADE",
       "script": "return source.value;",
       "event": "CHANGE",
       "disabled": false
@@ -1064,7 +1064,7 @@
           "index": 3,
           "x": 40,
           "y": 135,
-          "dataPointXid": "DP_CTRL_DJ_GERAL",
+          "dataPointXid": "BOTAO_CHAVE1",
           "imageSet": "Botao-3D",
           "zeroImageIndex": 0,
           "oneImageIndex": 1,
@@ -1077,14 +1077,14 @@
           "index": 4,
           "x": 40,
           "y": 135,
-          "content": "<div id=\"clk_DP_CTRL_DJ_GERAL\" title=\"Clique para alternar\" style=\"width:60px;height:60px;cursor:pointer\" onclick=\"var x='DP_CTRL_DJ_GERAL';fetch('api/point_value/getValue/'+x,{credentials:'include'}).then(function(r){return r.json()}).then(function(j){var on=(j.value==='true'||j.value===true);return fetch('api/point_value/setValue/'+x+'/1/'+(!on),{credentials:'include'})}).catch(function(e){console.log(e)});\"></div>"
+          "content": "<div id=\"clk_DP_CTRL_DJ_GERAL\" title=\"Clique para alternar\" style=\"width:60px;height:60px;cursor:pointer\" onclick=\"var x='BOTAO_CHAVE1';fetch('api/point_value/getValue/'+x,{credentials:'include'}).then(function(r){return r.json()}).then(function(j){var on=(j.value==='true'||j.value===true);return fetch('api/point_value/setValue/'+x+'/1/'+(!on),{credentials:'include'})}).catch(function(e){console.log(e)});\"></div>"
         },
         {
           "type": "SIMPLE",
           "index": 5,
           "x": 115,
           "y": 155,
-          "dataPointXid": "DP_CTRL_DJ_GERAL",
+          "dataPointXid": "BOTAO_CHAVE1",
           "displayPointName": false,
           "styleAttribute": "font:700 16px sans-serif"
         },
@@ -1100,7 +1100,7 @@
           "index": 7,
           "x": 270,
           "y": 135,
-          "dataPointXid": "DP_CTRL_DJ_MOTOR",
+          "dataPointXid": "BOTAO_CHAVE2",
           "imageSet": "Botao-3D",
           "zeroImageIndex": 0,
           "oneImageIndex": 1,
@@ -1113,14 +1113,14 @@
           "index": 8,
           "x": 270,
           "y": 135,
-          "content": "<div id=\"clk_DP_CTRL_DJ_MOTOR\" title=\"Clique para alternar\" style=\"width:60px;height:60px;cursor:pointer\" onclick=\"var x='DP_CTRL_DJ_MOTOR';fetch('api/point_value/getValue/'+x,{credentials:'include'}).then(function(r){return r.json()}).then(function(j){var on=(j.value==='true'||j.value===true);return fetch('api/point_value/setValue/'+x+'/1/'+(!on),{credentials:'include'})}).catch(function(e){console.log(e)});\"></div>"
+          "content": "<div id=\"clk_DP_CTRL_DJ_MOTOR\" title=\"Clique para alternar\" style=\"width:60px;height:60px;cursor:pointer\" onclick=\"var x='BOTAO_CHAVE2';fetch('api/point_value/getValue/'+x,{credentials:'include'}).then(function(r){return r.json()}).then(function(j){var on=(j.value==='true'||j.value===true);return fetch('api/point_value/setValue/'+x+'/1/'+(!on),{credentials:'include'})}).catch(function(e){console.log(e)});\"></div>"
         },
         {
           "type": "SIMPLE",
           "index": 9,
           "x": 345,
           "y": 155,
-          "dataPointXid": "DP_CTRL_DJ_MOTOR",
+          "dataPointXid": "BOTAO_CHAVE2",
           "displayPointName": false,
           "styleAttribute": "font:700 16px sans-serif"
         },
@@ -1136,7 +1136,7 @@
           "index": 11,
           "x": 500,
           "y": 135,
-          "dataPointXid": "DP_CTRL_DJ_INVERSOR",
+          "dataPointXid": "BOTAO_CHAVE3",
           "imageSet": "Botao-3D",
           "zeroImageIndex": 0,
           "oneImageIndex": 1,
@@ -1149,14 +1149,14 @@
           "index": 12,
           "x": 500,
           "y": 135,
-          "content": "<div id=\"clk_DP_CTRL_DJ_INVERSOR\" title=\"Clique para alternar\" style=\"width:60px;height:60px;cursor:pointer\" onclick=\"var x='DP_CTRL_DJ_INVERSOR';fetch('api/point_value/getValue/'+x,{credentials:'include'}).then(function(r){return r.json()}).then(function(j){var on=(j.value==='true'||j.value===true);return fetch('api/point_value/setValue/'+x+'/1/'+(!on),{credentials:'include'})}).catch(function(e){console.log(e)});\"></div>"
+          "content": "<div id=\"clk_DP_CTRL_DJ_INVERSOR\" title=\"Clique para alternar\" style=\"width:60px;height:60px;cursor:pointer\" onclick=\"var x='BOTAO_CHAVE3';fetch('api/point_value/getValue/'+x,{credentials:'include'}).then(function(r){return r.json()}).then(function(j){var on=(j.value==='true'||j.value===true);return fetch('api/point_value/setValue/'+x+'/1/'+(!on),{credentials:'include'})}).catch(function(e){console.log(e)});\"></div>"
         },
         {
           "type": "SIMPLE",
           "index": 13,
           "x": 575,
           "y": 155,
-          "dataPointXid": "DP_CTRL_DJ_INVERSOR",
+          "dataPointXid": "BOTAO_CHAVE3",
           "displayPointName": false,
           "styleAttribute": "font:700 16px sans-serif"
         },
@@ -1179,7 +1179,7 @@
           "index": 16,
           "x": 120,
           "y": 255,
-          "dataPointXid": "DP_CTRL_LED1",
+          "dataPointXid": "BOTAO_LED1",
           "imageSet": "Leds32",
           "zeroImageIndex": 3,
           "oneImageIndex": 4,
@@ -1192,7 +1192,7 @@
           "index": 17,
           "x": 120,
           "y": 255,
-          "content": "<div id=\"clk_DP_CTRL_LED1\" title=\"Clique para alternar\" style=\"width:32px;height:32px;cursor:pointer\" onclick=\"var x='DP_CTRL_LED1';fetch('api/point_value/getValue/'+x,{credentials:'include'}).then(function(r){return r.json()}).then(function(j){var on=(j.value==='true'||j.value===true);return fetch('api/point_value/setValue/'+x+'/1/'+(!on),{credentials:'include'})}).catch(function(e){console.log(e)});\"></div>"
+          "content": "<div id=\"clk_DP_CTRL_LED1\" title=\"Clique para alternar\" style=\"width:32px;height:32px;cursor:pointer\" onclick=\"var x='BOTAO_LED1';fetch('api/point_value/getValue/'+x,{credentials:'include'}).then(function(r){return r.json()}).then(function(j){var on=(j.value==='true'||j.value===true);return fetch('api/point_value/setValue/'+x+'/1/'+(!on),{credentials:'include'})}).catch(function(e){console.log(e)});\"></div>"
         },
         {
           "type": "HTML",
@@ -1206,7 +1206,7 @@
           "index": 19,
           "x": 290,
           "y": 255,
-          "dataPointXid": "DP_CTRL_LED2",
+          "dataPointXid": "BOTAO_LED2",
           "imageSet": "Leds32",
           "zeroImageIndex": 12,
           "oneImageIndex": 13,
@@ -1219,7 +1219,7 @@
           "index": 20,
           "x": 290,
           "y": 255,
-          "content": "<div id=\"clk_DP_CTRL_LED2\" title=\"Clique para alternar\" style=\"width:32px;height:32px;cursor:pointer\" onclick=\"var x='DP_CTRL_LED2';fetch('api/point_value/getValue/'+x,{credentials:'include'}).then(function(r){return r.json()}).then(function(j){var on=(j.value==='true'||j.value===true);return fetch('api/point_value/setValue/'+x+'/1/'+(!on),{credentials:'include'})}).catch(function(e){console.log(e)});\"></div>"
+          "content": "<div id=\"clk_DP_CTRL_LED2\" title=\"Clique para alternar\" style=\"width:32px;height:32px;cursor:pointer\" onclick=\"var x='BOTAO_LED2';fetch('api/point_value/getValue/'+x,{credentials:'include'}).then(function(r){return r.json()}).then(function(j){var on=(j.value==='true'||j.value===true);return fetch('api/point_value/setValue/'+x+'/1/'+(!on),{credentials:'include'})}).catch(function(e){console.log(e)});\"></div>"
         },
         {
           "type": "HTML",
@@ -1233,7 +1233,7 @@
           "index": 22,
           "x": 460,
           "y": 255,
-          "dataPointXid": "DP_CTRL_LED3",
+          "dataPointXid": "BOTAO_LED3",
           "imageSet": "Leds32",
           "zeroImageIndex": 6,
           "oneImageIndex": 7,
@@ -1246,7 +1246,7 @@
           "index": 23,
           "x": 460,
           "y": 255,
-          "content": "<div id=\"clk_DP_CTRL_LED3\" title=\"Clique para alternar\" style=\"width:32px;height:32px;cursor:pointer\" onclick=\"var x='DP_CTRL_LED3';fetch('api/point_value/getValue/'+x,{credentials:'include'}).then(function(r){return r.json()}).then(function(j){var on=(j.value==='true'||j.value===true);return fetch('api/point_value/setValue/'+x+'/1/'+(!on),{credentials:'include'})}).catch(function(e){console.log(e)});\"></div>"
+          "content": "<div id=\"clk_DP_CTRL_LED3\" title=\"Clique para alternar\" style=\"width:32px;height:32px;cursor:pointer\" onclick=\"var x='BOTAO_LED3';fetch('api/point_value/getValue/'+x,{credentials:'include'}).then(function(r){return r.json()}).then(function(j){var on=(j.value==='true'||j.value===true);return fetch('api/point_value/setValue/'+x+'/1/'+(!on),{credentials:'include'})}).catch(function(e){console.log(e)});\"></div>"
         },
         {
           "type": "HTML",
@@ -1260,7 +1260,7 @@
           "index": 25,
           "x": 630,
           "y": 255,
-          "dataPointXid": "DP_CTRL_LED4",
+          "dataPointXid": "BOTAO_LED4",
           "imageSet": "Leds32",
           "zeroImageIndex": 0,
           "oneImageIndex": 1,
@@ -1273,7 +1273,7 @@
           "index": 26,
           "x": 630,
           "y": 255,
-          "content": "<div id=\"clk_DP_CTRL_LED4\" title=\"Clique para alternar\" style=\"width:32px;height:32px;cursor:pointer\" onclick=\"var x='DP_CTRL_LED4';fetch('api/point_value/getValue/'+x,{credentials:'include'}).then(function(r){return r.json()}).then(function(j){var on=(j.value==='true'||j.value===true);return fetch('api/point_value/setValue/'+x+'/1/'+(!on),{credentials:'include'})}).catch(function(e){console.log(e)});\"></div>"
+          "content": "<div id=\"clk_DP_CTRL_LED4\" title=\"Clique para alternar\" style=\"width:32px;height:32px;cursor:pointer\" onclick=\"var x='BOTAO_LED4';fetch('api/point_value/getValue/'+x,{credentials:'include'}).then(function(r){return r.json()}).then(function(j){var on=(j.value==='true'||j.value===true);return fetch('api/point_value/setValue/'+x+'/1/'+(!on),{credentials:'include'})}).catch(function(e){console.log(e)});\"></div>"
         },
         {
           "type": "HTML",
@@ -1294,7 +1294,7 @@
           "index": 29,
           "x": 40,
           "y": 385,
-          "dataPointXid": "DP_CLP_DE_GERACAO_3",
+          "dataPointXid": "TENSAO",
           "displayPointName": false,
           "styleAttribute": "font:700 22px sans-serif;color:#1c2430"
         },
@@ -1310,7 +1310,7 @@
           "index": 31,
           "x": 270,
           "y": 385,
-          "dataPointXid": "DP_IED_DE_PROTECAO_5",
+          "dataPointXid": "CORRENTE",
           "displayPointName": false,
           "styleAttribute": "font:700 22px sans-serif;color:#1c2430"
         },
@@ -1326,7 +1326,7 @@
           "index": 33,
           "x": 500,
           "y": 385,
-          "dataPointXid": "DP_CLP_DE_GERACAO_2",
+          "dataPointXid": "POTENCIA",
           "displayPointName": false,
           "styleAttribute": "font:700 22px sans-serif;color:#1c2430"
         }
