@@ -14,61 +14,70 @@ Sala 3D (site) ──► Servidor do laboratório ◄── HTTPS (só saída) �
 | `mysql` | Banco do Scada-LTS |
 | `rede` | Contêiner mínimo dono da rede compartilhada |
 
-## Como baixar
+## Instalação: copie e cole UMA linha
 
-O pacote está neste repositório do GitHub: https://github.com/grei-ufc/scsep-scada-view
-
-**Mais rápido: uma linha só.** Com o WSL e o Ubuntu abertos, copie e cole **esta linha** no terminal do Ubuntu e aperte Enter. Ela baixa o pacote (instala o `git` se faltar), instala o Docker se faltar e sobe o laboratório, perguntando o seu token:
+Abra o terminal do seu Linux (no Windows: o **Ubuntu do WSL**) e cole **a linha do seu sistema**. O sistema vai pedir a sua **senha** (ao digitar ela não aparece: digite e aperte Enter).
 
 ```bash
-sudo apt update && sudo apt install -y curl && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/instalar.sh | bash
+# Ubuntu (e o Ubuntu do WSL)
+sudo apt update && sudo apt install -y curl git && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/instalar-lab-ubuntu.sh | bash
+
+# Debian
+sudo apt update && sudo apt install -y curl git && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/instalar-lab-debian.sh | bash
+
+# Kali Linux
+sudo apt update && sudo apt install -y curl git && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/instalar-lab-kali.sh | bash
+
+# Fedora
+sudo dnf install -y curl git && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/instalar-lab-fedora.sh | bash
 ```
 
-O pacote fica na pasta `~/scsep-scada-view`. Nas próximas vezes: `cd ~/scsep-scada-view && ./iniciar.sh`.
+Se o instalador não for o do seu sistema, ele avisa e mostra a linha certa. No **Debian** sem `sudo` ("sudo: command not found"): rode `su -`, depois `apt update && apt install -y curl git sudo` e cole a linha de novo.
 
-Funciona para quem só tem o WSL, para quem já tem o Docker e para quem já tem um Scada-LTS rodando (veja "Já tenho Docker e um Scada-LTS").
+### O que o instalador faz (6 passos, com mensagens em português)
 
-Se preferir baixar o pacote antes, use uma das opções abaixo.
+1. **Confere o computador**: sistema, internet, espaço em disco (uns 6 GB), memória e permissões.
+2. **Se você já usa o Docker, PARA todos os containers que estão rodando** (nada é apagado) e cria o arquivo `voltar-containers.sh` para ligá-los de novo. Ele **mostra a lista e pergunta antes**.
+3. **Instala o Docker e o Docker Compose** se faltarem. Se já existem, só continua.
+4. **Prepara**: se já existir um container com o nome `mysql`, `scadalts` etc., renomeia (com `-anterior`); se a porta 8080 estiver ocupada, usa outra livre (8088...).
+5. **Sobe o Scada-LTS e o vpn-local e pede o seu TOKEN DE ACESSO** (site > *Meu laboratório* > *Copiar token*). Sem o token agora, aperte só **Enter**: ele sobe do mesmo jeito.
+6. **Confere** se está tudo rodando e mostra o endereço, o login e os comandos do dia a dia.
 
-**Opção A: pelo terminal (recomendada)**
+Tudo o que aparece na tela fica gravado em `instalacao-DATA.log`, na pasta `~/scsep-scada-view`: se algo der errado, **envie esse arquivo ao professor**.
+
+**Token para depois:** coloque `LAB_SEM_TOKEN=1` antes do `bash` no fim da linha (`... | LAB_SEM_TOKEN=1 bash`) e, quando tiver o token: `cd ~/scsep-scada-view && ./adicionar-token.sh`.
+
+**Rodar de novo:** pode repetir o mesmo comando quando quiser; ele continua de onde parou e não duplica nada.
+
+**Sem teclado para perguntar** (automação): `LAB_CONFIRMA=s` antes do `bash` responde "sim" às perguntas.
+
+### Problemas comuns
+
+| O que aparece | O que fazer |
+|---|---|
+| `sudo: command not found` (Debian) | Rode `su -`, depois `apt update && apt install -y curl git sudo` e cole a linha de novo |
+| `permission denied ... docker.sock` | Feche e abra o terminal (o grupo `docker` só vale depois disso) ou use `sudo docker ...` |
+| O Docker não liga no WSL | `sudo service docker start`. Se o WSL for versão 1: no PowerShell, `wsl --set-version Ubuntu 2` |
+| Reiniciei o computador e nada subiu | Abra o terminal e rode `sudo systemctl start docker` (no WSL: `sudo service docker start`) e `cd ~/scsep-scada-view && docker compose up -d` |
+| A página do Scada-LTS não abre | Na primeira vez demora de 3 a 5 minutos. Veja: `docker logs scadalts` |
+| O vpn-local não conecta | Falta o token (`./adicionar-token.sh`) ou ele foi copiado incompleto. Veja: `docker logs vpn-local` |
+| "Pouco espaço em disco" | Libere uns 6 GB. Containers antigos: `docker system prune` |
+| "Could not get lock" / apt travado | Outra atualização está rodando: espere uns minutos (o instalador já espera até 3) e rode de novo |
+| Quero meus containers antigos de volta | `cd ~/scsep-scada-view && ./voltar-containers.sh` |
+| A porta 8080 está ocupada | O instalador escolhe outra sozinho e mostra o endereço certo no final |
+
+### Baixar o pacote sem a linha de comando
 
 ```bash
-cd ~
-git clone https://github.com/grei-ufc/scsep-scada-view.git
-cd scsep-scada-view
+cd ~ && git clone https://github.com/grei-ufc/scsep-scada-view.git && cd scsep-scada-view
+./instalar-lab-ubuntu.sh        # ou -debian, -kali, -fedora
 ```
 
-- Se o comando `git` não existir: `sudo apt update && sudo apt install -y git`.
-- Se o Git pedir usuário e senha, o repositório está privado: peça acesso ao professor.
+Pelo navegador: **Code > Download ZIP**, extraia e copie a pasta para o Linux (`cp -r /mnt/c/Users/SEU_USUARIO/Downloads/scsep-scada-view-main ~/scsep-scada-view`). Se aparecer "Permission denied" ao rodar um `.sh`, use `bash instalar-lab-ubuntu.sh`.
 
-**Opção B: pelo navegador (ZIP)**
+Pré-requisito no Windows: **WSL com Ubuntu** (PowerShell como administrador: `wsl --install -d Ubuntu`, reinicie e crie usuário e senha). O Docker **não** precisa estar instalado.
 
-1. Nesta página do GitHub, clique em **Code › Download ZIP** e extraia o arquivo.
-2. Copie a pasta para dentro do Ubuntu (WSL). No Ubuntu, troque `SEU_USUARIO` pelo seu usuário do Windows:
-
-   ```bash
-   cp -r /mnt/c/Users/SEU_USUARIO/Downloads/scsep-scada-view-main ~/scsep-scada-view
-   cd ~/scsep-scada-view
-   ```
-
-3. Se aparecer "Permission denied" ao rodar um `.sh`, use `bash instalar.sh`.
-
-## Início rápido
-
-Pré-requisitos: Windows 10 ou 11 com **WSL e Ubuntu** instalados (no PowerShell como administrador: `wsl --install -d Ubuntu`; reinicie o computador e crie o usuário e a senha do Ubuntu) e uma conta no site do laboratório. **O Docker não precisa estar instalado:** o `instalar.sh` instala.
-
-```bash
-# 1. Baixe o pacote e entre na pasta (veja "Como baixar")
-
-# 2. Pegue o token: site do laboratório > Meu laboratório > Token de ativação > Copiar token
-
-# 3. Instale e suba (instala o Docker se faltar e pergunta o token)
-./instalar.sh        # nas próximas vezes: ./iniciar.sh
-```
-
-Depois de 1 a 3 minutos, abra **http://localhost:8080/Scada-LTS/** (`admin` / `admin`; troque a senha) Não precisa configurar nada: **o `iniciar.sh` aplica sozinho** (só na primeira vez) a configuração do Scada-LTS, com os Data Sources, os pontos, os controles liga/desliga e a tela gráfica **Painel de comando** (menu **Graphic views**), onde você **clica** nos botões e LEDs para comandar a simulação. Se aparecer "AVISO: não consegui importar sozinho", rode `python3 scada-lts/importar.py` (se você trocou a senha do admin: `SCADA_SENHA=suasenha python3 scada-lts/importar.py`) ou importe `scada-lts/scada-lts-import.json` à mão em **Import/Export**.
-
-**Já instalou antes?** Atualize e aplique a configuração nova: `git pull && ./iniciar.sh`.
+Depois da instalação, abra **http://localhost:8080/Scada-LTS/** (`admin` / `admin`; troque a senha). O instalador aplica sozinho (só na primeira vez) a configuração do Scada-LTS: Data Sources, pontos, controles liga/desliga e a tela **Painel de comando** (menu **Graphic views**), onde você **clica** nos botões e LEDs para comandar a simulação. Se aparecer "AVISO: não consegui importar sozinho", rode `python3 scada-lts/importar.py` (senha do admin trocada: `SCADA_SENHA=suasenha python3 scada-lts/importar.py`) ou importe `scada-lts/scada-lts-import.json` em **Import/Export**. Para atualizar: `git pull && ./iniciar.sh`.
 
 ## Onde fica o token
 
@@ -83,45 +92,6 @@ No arquivo `.env`, na linha `CHAVE=`. Sem o script: `cp .env.example .env`, edit
 
 O token só é lido na primeira ativação; depois o vpn-local guarda a credencial no volume `scada-lab_vpn-local_data`. Para trocar de token: `docker compose down`, `docker volume rm scada-lab_vpn-local_data`, ajuste `CHAVE` e `docker compose up -d`.
 
-## Kali Linux (Debian)
-
-No **Kali Linux** (inclusive o Kali no WSL), use o instalador específico. Ele usa os pacotes do Debian/Kali (`docker.io` e `docker-compose`) e, se o `apt` reclamar das chaves do Kali, atualiza a chave sozinho:
-
-```bash
-sudo apt update && sudo apt install -y curl && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/instalar-kali.sh | bash
-```
-
-Se o primeiro `sudo apt update` já falhar por causa das chaves, rode antes: `sudo curl -fsSL -o /usr/share/keyrings/kali-archive-keyring.gpg https://archive.kali.org/archive-keyring.gpg`. O resto é igual ao Ubuntu (também para quem já tem um Scada-LTS).
-
-## Fedora
-
-Instala **só o Scada-LTS e o vpn-local** (não apaga nada do seu Docker). Instala o Docker pelo próprio Fedora (`moby-engine` e `docker-compose`) se faltar, liga o serviço e sobe o laboratório, pedindo o token:
-
-```bash
-sudo dnf install -y curl git && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/instalar-fedora.sh | bash
-```
-
-- Token para depois: coloque `LAB_SEM_TOKEN=1` antes do `bash` (`... | LAB_SEM_TOKEN=1 bash`) e, depois, rode `./adicionar-token.sh`.
-- Se algo falhar, o script mostra **a linha e o comando** do erro: copie e envie ao professor.
-- Se o GitHub servir uma versão antiga (cache), acrescente `?x=2` no fim do endereço do script.
-- *Opcional e destrutivo*: `LAB_LIMPAR_DOCKER=1` apaga **todos** os containers e imagens antes de instalar, só depois de você digitar `APAGAR TUDO`.
-
-## Instalar agora e colocar o token depois (Debian/Ubuntu)
-
-Este comando **identifica a distribuição** (Debian, Ubuntu ou derivados, como o Kali), **para o Scada-LTS que você já tem** (os containers de Scada-LTS; nada é apagado e ele **pergunta antes**), instala o laboratório e deixa pronto, **já com as conexões Modbus** (Data Sources, pontos, controles e a tela Painel de comando). O **token fica para depois**:
-
-```bash
-sudo apt update && sudo apt install -y curl && curl -fsSL https://raw.githubusercontent.com/grei-ufc/scsep-scada-view/main/instalar-sem-token.sh | bash
-```
-
-Quando tiver o token (site > Meu laboratório > Copiar token), adicione-o:
-
-```bash
-cd ~/scsep-scada-view && ./adicionar-token.sh
-```
-
-Para voltar ao seu Scada-LTS: `./voltar-ao-scada-anterior.sh` (na mesma pasta). Em outra distribuição (Fedora, por exemplo) o instalador recusa com uma mensagem clara.
-
 ## Já tenho Scada-LTS e quero MANTER o meu
 
 Se você já tem um Scada-LTS rodando e **não quer pará-lo**, use este comando: ele instala só o **vpn-local**, liga-o ao **seu** Scada-LTS e **aplica nele a configuração do laboratório** (4 Data Sources, 25 pontos, os controles liga/desliga e a tela **Painel de comando**). Nada que você já tem é parado, apagado ou alterado: a configuração só é **adicionada** (ele pergunta antes). Serve no Ubuntu e no Kali:
@@ -133,11 +103,11 @@ sudo apt update && sudo apt install -y curl && curl -fsSL https://raw.githubuser
 - Ele acha sozinho o container do Scada-LTS; se houver mais de um, pergunta o nome (`docker ps`). Para informar direto: `LAB_ALVO=NOME_DO_CONTAINER` antes do comando, ou `./so-vpn-local.sh NOME_DO_CONTAINER` com o pacote baixado.
 - Se o admin do seu Scada-LTS **não** for `admin`/`admin`, ele pede o usuário e a senha.
 - Se você **recriar** o container do Scada-LTS, rode o comando de novo (o vpn-local usa a rede dele).
-- Para **parar o seu** e usar o do laboratório, use o comando principal (`instalar.sh`), na seção abaixo.
+- Para **parar o seu** e usar o do laboratório, use o instalador do seu sistema (início desta página).
 
-## Já tenho Docker e um Scada-LTS
+## Já tenho Docker e um Scada-LTS rodando
 
-**O mesmo comando de cima serve.** Se ele achar um Scada-LTS seu rodando (ou containers com os mesmos nomes do laboratório, como `mysql` e `scadalts`), ele mostra o que vai parar e **pergunta antes**. Nada é apagado: os containers são parados e, quando o nome é igual ao do laboratório, renomeados com `-anterior`. Para **voltar ao seu Scada-LTS**: `cd ~/scsep-scada-view && ./voltar-ao-scada-anterior.sh`.
+Use o instalador do seu sistema (início desta página). No **passo 2** ele lista os containers que estão rodando (inclusive o seu Scada-LTS), **pergunta** e os **PARA, sem apagar nada**. Para ligá-los de novo depois: `cd ~/scsep-scada-view && ./voltar-containers.sh`.
 
 ## Já tenho Docker e Scada-LTS: como ligar o vpn-local
 
@@ -159,7 +129,7 @@ Troque `PORTA` pela porta do seu Scada-LTS. Se a senha do admin não for `admin`
 
 - Se você **recriar** o container do Scada-LTS, rode `./so-vpn-local.sh` de novo: o vpn-local usa a rede dele.
 - Se já existir um container chamado `vpn-local` (por exemplo, do pacote completo), o script **pergunta antes de substituir**.
-- Se o seu Scada-LTS roda no **Windows** (fora do WSL), esse caminho não serve: use o pacote completo (`./instalar.sh`).
+- Se o seu Scada-LTS roda no **Windows** (fora do WSL), esse caminho não serve: use o pacote completo (instalador do seu sistema).
 
 ## Comandos do dia a dia
 
@@ -174,19 +144,21 @@ Troque `PORTA` pela porta do seu Scada-LTS. Se a senha do admin não for `admin`
 ## Conteúdo
 
 ```
-trocar-scada.sh          # atalho antigo: chama o instalar.sh
-instalar-fedora.sh       # Fedora: instala o Scada-LTS e o vpn-local (não apaga nada)
-instalar-sem-token.sh    # Debian/Ubuntu: para o Scada-LTS existente, instala o nosso com as conexões; token depois
-adicionar-token.sh       # adiciona (ou troca) o token do vpn-local depois da instalação
-instalar-no-meu-scada.sh # para quem já tem Scada-LTS e quer MANTER o dele: instala o vpn-local e aplica a configuração
-so-vpn-local.sh          # para quem já tem Docker e Scada-LTS: sobe só o vpn-local ligado ao seu Scada-LTS
-instalar-kali.sh         # o mesmo, para Kali Linux (Debian)
-instalar.sh              # instala o Docker (se faltar) e chama o iniciar.sh
+instalar-lab-ubuntu.sh   # instalador Ubuntu (e Ubuntu do WSL)
+instalar-lab-debian.sh   # instalador Debian
+instalar-lab-kali.sh     # instalador Kali Linux
+instalar-lab-fedora.sh   # instalador Fedora
+lib/lab-comum.sh         # os passos e as mensagens, comuns aos quatro instaladores
 iniciar.sh               # pergunta o token, grava o .env e sobe tudo
+adicionar-token.sh       # adiciona (ou troca) o token do vpn-local depois da instalação
+voltar-containers.sh     # (criado pelo instalador) liga de novo os containers que ele parou
+instalar-no-meu-scada.sh # para quem já tem Scada-LTS e quer MANTER o dele: instala o vpn-local e aplica a configuração
+so-vpn-local.sh          # o mesmo, com mais opções (nome do container, --host)
 docker-compose.yml       # rede, mysql, vpn-local, scadalts
 .env.example             # modelo de configuração (copie para .env)
 vpn-local/               # Dockerfile e vpn-local-service.cjs (o vpn-local como serviço, gerado)
-scada-lts/               # importar.py (aplica a configuração sozinho) e scada-lts-import.json: 4 Data Sources, 25 pontos, 14 point links e a tela gráfica "Painel de comando" (botões e LEDs clicáveis)
+scada-lts/               # importar.py (aplica a configuração sozinho) e scada-lts-import.json: 4 Data Sources, 25 pontos, 14 point links e a tela gráfica "Painel de comando"
+# Instaladores antigos (ainda funcionam): instalar.sh, instalar-kali.sh, instalar-fedora.sh, instalar-sem-token.sh, trocar-scada.sh
 ```
 
 ## Segurança

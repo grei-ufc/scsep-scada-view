@@ -3,3 +3,5 @@
 .scada-config-aplicada
 docs/
 voltar-ao-scada-anterior.sh
+voltar-containers*.sh
+instalacao-*.log

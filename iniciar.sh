@@ -20,13 +20,38 @@ grava() { if grep -qE "^$1=" .env; then sed -i "s|^$1=.*|$1=$2|" .env; else echo
 ja_ativada=0
 docker volume inspect scada-lab_vpn-local_data >/dev/null 2>&1 && ja_ativada=1
 
+# Lê uma linha do teclado de verdade (o terminal), mesmo que a saída esteja sendo gravada em um arquivo de registro
+ler() { # ler "pergunta" variavel
+  local _r=""
+  if ( : < /dev/tty ) 2>/dev/null; then printf '%s' "$1" > /dev/tty; read -r _r < /dev/tty || _r=""
+  else read -rp "$1" _r || _r=""; fi
+  printf -v "$2" '%s' "$_r"
+}
+
 chave="$(valor CHAVE)"
 if [ "$ja_ativada" = 0 ] && [ -z "$chave" ] && [ "${LAB_SEM_TOKEN:-0}" != 1 ]; then
-  echo "Cole o seu token de ativação (site do laboratório > Meu laboratório > Copiar token)."
-  read -rp "Token (começa com ak_): " chave
-  chave="$(echo "$chave" | tr -d '[:space:]"'"'"'')"
-  if ! [[ "$chave" =~ ^ak_[A-Za-z0-9_-]+$ ]]; then echo "ERRO: token inválido. Copie de novo, inteiro, sem espaços."; exit 1; fi
-  grava CHAVE "$chave"
+  cat <<'TXT'
+
+=========================== TOKEN DE ACESSO ===========================
+O token liga o seu laboratório ao servidor (é como a "chave" do seu usuário).
+  1. Abra o site do laboratório e entre com o seu usuário e senha.
+  2. Vá em "Meu laboratório" e clique em "Copiar token". Ele começa com  ak_
+  3. Volte aqui, cole o token (botão direito do mouse, ou Ctrl+Shift+V) e aperte Enter.
+
+Ainda não tem o token? Aperte só Enter: o laboratório sobe do mesmo jeito e
+você coloca o token depois com:   ./adicionar-token.sh
+=======================================================================
+TXT
+  tentativas=0
+  while :; do
+    ler "Token (ou só Enter para deixar para depois): " chave
+    chave="$(echo "$chave" | tr -d '[:space:]"'"'"'')"
+    if [ -z "$chave" ]; then LAB_SEM_TOKEN=1; echo "Ok, o token fica para depois."; break; fi
+    if [[ "$chave" =~ ^ak_[A-Za-z0-9_-]+$ ]]; then grava CHAVE "$chave"; echo "Token recebido."; break; fi
+    tentativas=$((tentativas + 1))
+    if [ "$tentativas" -ge 3 ]; then LAB_SEM_TOKEN=1; echo "Não deu certo 3 vezes. Vamos deixar o token para depois (./adicionar-token.sh)."; break; fi
+    echo "Esse token não parece certo: ele começa com ak_ e não tem espaços. Copie de novo, inteiro, e cole."
+  done
 fi
 
 echo "Subindo os contêineres (na primeira vez baixa as imagens; pode levar alguns minutos)..."
@@ -45,9 +70,9 @@ for _ in $(seq 1 30); do
 done
 
 porta="$(valor SCADA_PORT)"; porta="${porta:-8080}"
-echo "Aguardando o Scada-LTS iniciar (1 a 3 minutos)..."
+echo "Aguardando o Scada-LTS iniciar (na primeira vez leva de 1 a 5 minutos)..."
 if command -v curl >/dev/null 2>&1; then
-  for _ in $(seq 1 90); do
+  for _ in $(seq 1 150); do
     cod="$(curl -s -o /dev/null -w '%{http_code}' "http://localhost:${porta}/Scada-LTS/" || true)"
     [ "$cod" = "200" ] || [ "$cod" = "302" ] && break
     sleep 2
