@@ -486,7 +486,7 @@
     },
     {
       "xid": "BOTAO_LED1",
-      "name": "Botão - LED 1 (verde): ligar/desligar",
+      "name": "LED 1 (verde)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "FONTE_BOTOES",
@@ -509,7 +509,7 @@
     },
     {
       "xid": "BOTAO_LED2",
-      "name": "Botão - LED 2 (amarelo): ligar/desligar",
+      "name": "LED 2 (amarelo)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "FONTE_BOTOES",
@@ -532,7 +532,7 @@
     },
     {
       "xid": "BOTAO_LED3",
-      "name": "Botão - LED 3 (vermelho): ligar/desligar",
+      "name": "LED 3 (vermelho)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "FONTE_BOTOES",
@@ -555,7 +555,7 @@
     },
     {
       "xid": "BOTAO_LED4",
-      "name": "Botão - LED 4 (azul): ligar/desligar",
+      "name": "LED 4 (azul)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "FONTE_BOTOES",
@@ -578,7 +578,7 @@
     },
     {
       "xid": "BOTAO_CHAVE1",
-      "name": "Botão - Chave 1 (geral): fechar/abrir",
+      "name": "Chave 1 (geral)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "FONTE_BOTOES",
@@ -601,7 +601,7 @@
     },
     {
       "xid": "BOTAO_CHAVE2",
-      "name": "Botão - Chave 2 (motor): fechar/abrir",
+      "name": "Chave 2 (motor)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "FONTE_BOTOES",
@@ -624,7 +624,7 @@
     },
     {
       "xid": "BOTAO_CHAVE3",
-      "name": "Botão - Chave 3 (inversor): fechar/abrir",
+      "name": "Chave 3 (inversor)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "FONTE_BOTOES",
@@ -794,7 +794,7 @@
     },
     {
       "xid": "BOTAO_MOTOR",
-      "name": "Botão - Motor: ligar/desligar",
+      "name": "Motor - ligar/desligar",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "FONTE_BOTOES",
@@ -817,7 +817,7 @@
     },
     {
       "xid": "BOTAO_MOTOR_SENTIDO",
-      "name": "Botão - Motor: sentido de giro (só com o motor parado)",
+      "name": "Motor - sentido de giro",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "FONTE_BOTOES",
@@ -840,7 +840,7 @@
     },
     {
       "xid": "BOTAO_MOTOR_VELOCIDADE",
-      "name": "Botão - Motor: velocidade (rpm, 1 a 1800)",
+      "name": "Motor - velocidade (rpm)",
       "enabled": true,
       "loggingType": "ON_CHANGE",
       "dataSourceXid": "FONTE_BOTOES",
